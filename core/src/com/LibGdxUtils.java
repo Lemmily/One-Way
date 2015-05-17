@@ -19,12 +19,10 @@
  * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package uk.co.lemmily.game;
+package com;
 
 import java.util.Random;
 
-import aurelienribon.tweenengine.Tween;
-import aurelienribon.tweenengine.TweenManager;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
@@ -37,9 +35,8 @@ import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Logger;
-import uk.co.lemmily.game.splash.SplashScreen;
-import uk.co.lemmily.game.tween.ActorAccessor;
-import uk.co.lemmily.game.ui.UIMananager;
+import com.screens.SplashScreen;
+import com.utils.Assets;
 
 /**
  * This is the main class of the game itself. It offers access to the
@@ -48,7 +45,7 @@ import uk.co.lemmily.game.ui.UIMananager;
  *
  * @author Daniel Holderbaum
  */
-public class LibgdxUtils implements ApplicationListener {
+public class LibGdxUtils implements ApplicationListener {
 
     /**
      * This is the {@link Logger} which will be used throughout the whole
@@ -68,19 +65,14 @@ public class LibgdxUtils implements ApplicationListener {
         }
     };
 
-    /**
-     * The only {@link AssetManager} which is responsible for the whole game.
-     */
-    public static final AssetManager assets = new AssetManager();
-
-    public static final Random random = new Random();
+//    /**
+//     * The only {@link AssetManager} which is responsible for the whole game.
+//     */
+//    public static final Assets assets = new Assets();
 
     public static SpriteBatch spriteBatch;
 
     public static ModelBatch modelBatch;
-
-    public static TweenManager tweenManager;
-    private UIMananager uiManager;
 
     @Override
     public void create() {
@@ -88,14 +80,10 @@ public class LibgdxUtils implements ApplicationListener {
             logger.setLevel(Logger.DEBUG);
             Gdx.app.setLogLevel(Application.LOG_DEBUG);
 
-            Texture.setAssetManager(assets);
+            Texture.setAssetManager(Assets.manager);
 
             spriteBatch = new SpriteBatch();
-//            spriteBatch.setProjectionMatrix(new Matrix4().setToOrtho2D(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
             modelBatch = new ModelBatch();
-
-            tweenManager = new TweenManager();
-            Tween.registerAccessor(Actor.class, new ActorAccessor());
 
             game.create();
         } catch (Exception e) {
@@ -117,7 +105,6 @@ public class LibgdxUtils implements ApplicationListener {
     @Override
     public void render() {
         try {
-            tweenManager.update(Gdx.graphics.getDeltaTime());
             game.render();
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
@@ -148,7 +135,7 @@ public class LibgdxUtils implements ApplicationListener {
     @Override
     public void dispose() {
         game.dispose();
-        assets.dispose();
+        Assets.manager.dispose();
 
         if (spriteBatch != null) {
             spriteBatch.dispose();
@@ -156,9 +143,5 @@ public class LibgdxUtils implements ApplicationListener {
         if (modelBatch != null) {
             modelBatch.dispose();
         }
-    }
-
-    public UIMananager getUIelement() {
-        return uiManager;
     }
 }
