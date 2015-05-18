@@ -1,7 +1,6 @@
 package com.screens;
 
 import com.LibGdxUtils;
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -26,10 +25,9 @@ public class SplashScreen implements Screen {
         stage.draw();
 
         if(Assets.update()){ // check if all files are loaded
-
             if(animationDone){ // when the animation is finished, go to MainMenu()
                 Assets.setMenuSkin(); // uses files to create menuSkin
-                LibGdxUtils.game.setScreen(new MainMenu());
+                LibGdxUtils.game.setScreen(new GameScreen());
             }
         }
     }
