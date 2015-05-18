@@ -19,7 +19,7 @@ public class TileActor extends Actor {
     public TileActor(final Tile pTile) {
         theTexture = Assets.get("images/tiles.atlas", "bg");
 
-        setSize(theTexture.getRegionWidth(),
+        setSize(theTexture.getRegionWidth(), theTexture.getRegionHeight());
         addListener(new ClickListener() {
             @Override
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
