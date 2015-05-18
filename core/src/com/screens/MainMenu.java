@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.GL20;
  * Created by lemmily on 17/05/2015.
  */
 public class MainMenu implements Screen {
+
     @Override
     public void show() {
 
@@ -17,7 +18,6 @@ public class MainMenu implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
     }
 
     @Override
