@@ -2,6 +2,7 @@ package com.board;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -18,7 +19,7 @@ public class TileActor extends Actor {
     public TileActor(final Tile pTile) {
         theTexture = Assets.get("images/tiles.atlas", "bg");
 
-        setSize(theTexture.getRegionWidth(), theTexture.getRegionHeight());
+        setSize(theTexture.getRegionWidth(),
         addListener(new ClickListener() {
             @Override
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
