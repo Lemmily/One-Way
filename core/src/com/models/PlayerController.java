@@ -84,7 +84,6 @@ public class PlayerController {
         thePlayerMoved = pPlayerMoved;
     }
 
-
     public void setCurrentAction(PlayerAction pAction) {
         theCurrentAction = pAction;
     }
