@@ -7,7 +7,7 @@ import com.utils.Enums;
 /**
  * Created by emily on 19/05/15.
  */
-public class Stats extends Component{
+public class StatsComponent extends Component{
     /**
      * container for holding the stats data
      */
@@ -21,7 +21,7 @@ public class Stats extends Component{
     private Attribute theLuck;
 
 
-    public Stats(Attribute pStrength, Attribute pDexterity, Attribute pIntelligence, Attribute pConstitution, Attribute pCharisma, Attribute pWisdom, Attribute pLuck) {
+    public StatsComponent(Attribute pStrength, Attribute pDexterity, Attribute pIntelligence, Attribute pConstitution, Attribute pCharisma, Attribute pWisdom, Attribute pLuck) {
         theStrength = pStrength;
         theDexterity = pDexterity;
         theIntelligence = pIntelligence;
@@ -31,7 +31,7 @@ public class Stats extends Component{
         theWisdom = pWisdom;
         theLuck = pLuck;
     }
-    public Stats(int pStrength, int pDexterity, int pIntelligence, int pConstitution, int pCharisma, int pWisdom, int pLuck) {
+    public StatsComponent(int pStrength, int pDexterity, int pIntelligence, int pConstitution, int pCharisma, int pWisdom, int pLuck) {
         theStrength = new Attribute(Enums.Attributes.Strength, pStrength);
         theDexterity = new Attribute(Enums.Attributes.Dexterity, pDexterity);
         theIntelligence = new Attribute(Enums.Attributes.Intelligence, pIntelligence);

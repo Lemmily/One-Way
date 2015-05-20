@@ -2,6 +2,8 @@ package com.models.entities;
 
 
 import com.badlogic.ashley.signals.Signal;
+import com.models.components.EnemyComponent;
+import com.models.components.StatsComponent;
 import com.models.listeners.ActionListener;
 import com.models.signals.ActionTaken;
 
@@ -9,17 +11,21 @@ import com.models.signals.ActionTaken;
  * Created by emily on 19/05/15.
  */
 
-public class Monster extends InteractableEntity implements ActionListener {
+public class Monster extends GameEntity implements Actable, Interactable, ActionListener {
+
+    protected int theActionPoints;
 
     public Monster() {
         super();
+        theActionPoints = 5;
+        add(new EnemyComponent());
+        add(new StatsComponent(5,5,5,5,5,5,5));
     }
 
 
     @Override
     public boolean canPerformAction() {
-        if (theActionPoints > 10) return true;
-        return false;
+        return theActionPoints > 10;
     }
 
     @Override

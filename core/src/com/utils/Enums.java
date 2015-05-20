@@ -5,7 +5,6 @@ package com.utils;
  */
 public class Enums {
 
-
     public static enum Attributes {
         Strength,
         Dexterity,

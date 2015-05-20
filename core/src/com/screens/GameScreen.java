@@ -9,10 +9,10 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.board.Board;
 import com.board.BoardActor;
+import com.models.HudController;
 import com.models.PlayerController;
 import com.models.components.Components;
-import com.models.components.Enemy;
-import com.models.components.Stats;
+import com.models.components.StatsComponent;
 import com.models.entities.Monster;
 import com.models.systems.ActionSystem;
 import com.utils.Enums;
@@ -26,8 +26,9 @@ public class GameScreen implements Screen{
     private Board theBoard;
     private BoardActor theBoardActor;
     private Stage theStage;
+    private Stage theHudStage;
     private Engine theEngine;
-    private Monster theMonster;
+    private HudController theHudController;
 
 
     @Override
@@ -36,6 +37,10 @@ public class GameScreen implements Screen{
         PlayerController.init();
 
         theStage = new Stage(new ScreenViewport());
+        theHudStage = new Stage(new ScreenViewport());
+
+        theHudController = HudController.init(theHudStage);
+
         Gdx.input.setInputProcessor(theStage);
         theBoard = new Board(4);
         theBoardActor = new BoardActor(theBoard);
@@ -51,22 +56,25 @@ public class GameScreen implements Screen{
         theEngine.addSystem(new ActionSystem(new Comparator<Entity>() {
             @Override
             public int compare(Entity pEntity_1, Entity pEntity_2) {
-                Stats lStat_1 = Components.STATS.get(pEntity_1);
-                Stats lStat_2 = Components.STATS.get(pEntity_2);
+                StatsComponent lStat_1 = Components.STATS.get(pEntity_1);
+                StatsComponent lStat_2 = Components.STATS.get(pEntity_2);
 
-                return lStat_1.get(Enums.Attributes.Dexterity).getValue() - lStat_2.get(Enums.Attributes.Dexterity).getValue();
+                return lStat_2.get(Enums.Attributes.Dexterity).getValue() - lStat_1.get(Enums.Attributes.Dexterity).getValue();
 
 //                return 0;
             }
-
         }));
 
 
-        theMonster = new Monster();
-        PlayerController.get().registerListener(theMonster);
-        theEngine.addEntity(theMonster);
-        theMonster.add(new Enemy());
-        theMonster.add(new Stats(5, 5, 5, 5, 5, 5, 5));
+        Monster lMonster = new Monster();
+        PlayerController.get().registerListener(lMonster);
+        theEngine.addEntity(lMonster);
+
+
+        lMonster = new Monster();
+        PlayerController.get().registerListener(lMonster);
+        theEngine.addEntity(lMonster);
+        lMonster.add(new StatsComponent(5, 15, 5, 5, 5, 5, 5));
     }
 
     @Override
@@ -74,10 +82,14 @@ public class GameScreen implements Screen{
         Gdx.gl.glClearColor(0.2f, 0.2f, 0.2f, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
+        theHudController.setFPS("FPS: " + Gdx.graphics.getFramesPerSecond());
         theEngine.update(delta);
 
         theStage.act(delta);
         theStage.draw();
+
+        theHudStage.act();
+        theHudStage.draw();
     }
 
     @Override

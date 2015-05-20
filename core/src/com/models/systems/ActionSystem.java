@@ -4,8 +4,8 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.SortedIteratingSystem;
 import com.models.PlayerController;
-import com.models.components.Enemy;
-import com.models.components.Stats;
+import com.models.components.EnemyComponent;
+import com.models.components.StatsComponent;
 import com.models.entities.Monster;
 
 import java.util.Comparator;
@@ -16,7 +16,7 @@ import java.util.Comparator;
 public class ActionSystem extends SortedIteratingSystem {
 
 
-    private static Family FAMILY = Family.all(Enemy.class, Stats.class).get();
+    private static Family FAMILY = Family.all(EnemyComponent.class, StatsComponent.class).get();
 
     public ActionSystem( Comparator<Entity> comparator) {
         super(FAMILY, comparator);

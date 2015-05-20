@@ -6,9 +6,11 @@ package com.models.signals;
 public class ActionTaken {
 
     public int theActionPoints;
+//    public boolean thePlayerMoved;
 
-    public ActionTaken(int pPoints) {
+    public ActionTaken(int pPoints ) { //, boolean pPlayerMoved) {
         theActionPoints = pPoints;
+//        thePlayerMoved = pPlayerMoved;
     }
 
 }

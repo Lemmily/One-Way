@@ -6,7 +6,6 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.models.PlayerController;
-import com.models.signals.ActionTaken;
 import com.utils.Assets;
 
 /**
@@ -38,7 +37,11 @@ public class TileActor extends Actor {
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("CLICKED " + pTile.thePos);
                 //broadcast action performed.
-                PlayerController.get().actionPerformed(new ActionTaken(5));
+                if(pTile.isOccupied())
+                    PlayerController.get().actionPerformed(pTile.getOccupier());
+                else {
+                    PlayerController.get().actionPerformed();
+                }
             }
         });
     }
