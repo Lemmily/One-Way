@@ -15,12 +15,10 @@ public class BoardActor extends Group {
 //        addActor(buttonPlay);
         for (int i = 0; i < pBoard.theTiles.size(); i++) {
             TileActor lTile = new TileActor(pBoard.theTiles.get(i));
-            lTile.setPosition(i * lTile.getWidth(), 0);
+            lTile.setPosition(i * (lTile.getWidth()), 0);
             this.addActor(lTile);
         }
 //        this.setTouchable(Touchable.childrenOnly);
     }
-
-
 
 }

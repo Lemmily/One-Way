@@ -1,5 +1,6 @@
 package com.board;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.models.entities.GameEntity;
 import com.models.entities.Monster;
 
@@ -26,5 +27,9 @@ public class Tile  {
 
     public boolean isOccupied() {
         return theOccupier != null;
+    }
+
+    public TextureRegion getTexture() {
+        return theOccupier.theTexture;
     }
 }
