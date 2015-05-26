@@ -6,22 +6,15 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.board.Board;
 import com.board.BoardActor;
-import com.board.TileActor;
 import com.models.GameController;
 import com.models.HudController;
 import com.models.PlayerController;
-import com.models.actions.PlayerAction;
 import com.models.components.Components;
 import com.models.components.StatsComponent;
-import com.models.entities.Monster;
-import com.models.entities.Player;
-import com.models.signals.ActionTaken;
 import com.models.systems.ActionSystem;
 import com.utils.Enums;
 
@@ -46,12 +39,12 @@ public class GameScreen implements Screen{
         theHudStage = new Stage(new ScreenViewport());
 
         PlayerController.init();
-        theHudController = HudController.init(theHudStage);
-
         theEngine = new Engine();
         GameController.init(theEngine);
+        theHudController = HudController.init(theHudStage);
 
-        Gdx.input.setInputProcessor(new InputMultiplexer(theStage, theHudStage));
+
+        Gdx.input.setInputProcessor(new InputMultiplexer(theStage, theHudStage, PlayerController.get()));
         theBoard = new Board(4);
         theBoardActor = new BoardActor(theBoard);
         theBoardActor.setPosition(100, 100);
@@ -72,65 +65,6 @@ public class GameScreen implements Screen{
                 return lStat_2.get(Enums.Attributes.Dexterity).getValue() - lStat_1.get(Enums.Attributes.Dexterity).getValue();
             }
         }));
-
-
-        TileActor lFakeButton = new TileActor();
-        lFakeButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                System.out.println("Switched to action 1");
-                PlayerController.get().setCurrentAction(new PlayerAction() {
-                        @Override
-                        public ActionTaken execute() {
-                            System.out.println("action 1 performed on nothing");
-                            return new ActionTaken(5);
-                        }
-
-                        @Override
-                        public ActionTaken execute(Monster pMonster) {
-                            System.out.println("action 1 performed on monster");
-                            return new ActionTaken(5);
-                        }
-
-                        @Override
-                        public ActionTaken execute(Player pPlayer) {
-                            System.out.println("action 1 performed on player");
-                            return new ActionTaken(5);
-                        }
-                    });
-            }
-        });
-        theHudStage.addActor(lFakeButton);
-
-        lFakeButton = new TileActor();
-        lFakeButton.setPosition(100, 0);
-        lFakeButton.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                System.out.println("Switched to action 2");
-                PlayerController.get().setCurrentAction(new PlayerAction() {
-                    @Override
-                    public ActionTaken execute() {
-                        System.out.println("action 2 performed on nothing");
-                        return new ActionTaken(10);
-                    }
-
-                    @Override
-                    public ActionTaken execute(Monster pMonster) {
-                        System.out.println("action 2 performed on monster");
-                        return new ActionTaken(10);
-                    }
-
-                    @Override
-                    public ActionTaken execute(Player pPlayer) {
-                        System.out.println("action 2 performed on player");
-                        return new ActionTaken(10);
-                    }
-                });
-            }
-        });
-        theHudStage.addActor(lFakeButton);
-
     }
 
     @Override

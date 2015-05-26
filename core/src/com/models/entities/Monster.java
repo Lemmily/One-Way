@@ -1,6 +1,5 @@
 package com.models.entities;
 
-
 import com.badlogic.ashley.signals.Signal;
 import com.models.components.EnemyComponent;
 import com.models.components.StatsComponent;

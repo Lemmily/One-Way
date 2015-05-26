@@ -27,6 +27,12 @@ public class Tile  {
         }
     }
 
+    public Tile(int pPos, GameEntity pGameEntity) {
+        thePos = pPos;
+        theOccupier = pGameEntity;
+    }
+
+
     public GameEntity getOccupier() {
         return theOccupier;
     }

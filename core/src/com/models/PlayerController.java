@@ -1,6 +1,7 @@
 package com.models;
 
 import com.badlogic.ashley.signals.Signal;
+import com.badlogic.gdx.InputProcessor;
 import com.models.actions.PlayerAction;
 import com.models.components.Components;
 import com.models.entities.GameEntity;
@@ -12,7 +13,7 @@ import com.models.signals.ActionTaken;
 /**
  * Created by emily on 19/05/15.
  */
-public class PlayerController {
+public class PlayerController implements InputProcessor {
     private static PlayerController INSTANCE;
 
     public static PlayerController get() {
@@ -27,6 +28,7 @@ public class PlayerController {
     private boolean thePlayerMoved;
 
     private PlayerAction theCurrentAction;
+    private Player thePlayer;
 
     /**
      * Singleton(??) To control the interactions made by the player
@@ -34,42 +36,28 @@ public class PlayerController {
     private PlayerController() {
         thePlayerControlsSignal = new Signal<>();
 
-        theCurrentAction = new PlayerAction() {
-            @Override
-            public ActionTaken execute() {
-                System.out.println("action performed on nothing");
-                return new ActionTaken(5);
-            }
-
-            @Override
-            public ActionTaken execute(Monster pMonster) {
-                System.out.println("action performed on monster");
-                return new ActionTaken(5);
-            }
-
-            @Override
-            public ActionTaken execute(Player pPlayer) {
-                System.out.println("action performed on player");
-                return new ActionTaken(5);
-            }
-        };
+        thePlayer = new Player();
+        theCurrentAction = null;
     }
 
     public void actionPerformed() {
         thePlayerControlsSignal.dispatch(theCurrentAction.execute());
         thePlayerMoved = true;
     }
-//    public void actionPerformed(Player pPlayer) {
-//        thePlayerControlsSignal.dispatch(theCurrentAction.execute(pPlayer));
-//        thePlayerMoved = true;
-//    }
-    public void actionPerformed(GameEntity pGameEntity) {
-        if (Components.ENEMY.get(pGameEntity) != null)
-            thePlayerControlsSignal.dispatch(theCurrentAction.execute((Monster)pGameEntity));
-        if (Components.PLAYER.get(pGameEntity) != null)
-            thePlayerControlsSignal.dispatch(theCurrentAction.execute((Player)pGameEntity));
 
-        thePlayerMoved = true;
+    public void actionPerformed(GameEntity pGameEntity) {
+        if(theCurrentAction != null) {
+            if (Components.ENEMY.get(pGameEntity) != null)
+                thePlayerControlsSignal.dispatch(theCurrentAction.execute((Monster) pGameEntity));
+            if (Components.PLAYER.get(pGameEntity) != null)
+                thePlayerControlsSignal.dispatch(theCurrentAction.execute((Player) pGameEntity));
+
+            thePlayerMoved = true;
+        } else {
+            if (Components.ENEMY.get(pGameEntity) != null) {
+                //show enemy stats
+            }
+        }
     }
 
     public void registerListener(ActionListener pListener) {
@@ -80,11 +68,59 @@ public class PlayerController {
         return thePlayerMoved;
     }
 
+    public Player player() {
+        return thePlayer;
+    }
+
     public void setPlayerMoved(boolean pPlayerMoved) {
         thePlayerMoved = pPlayerMoved;
     }
 
     public void setCurrentAction(PlayerAction pAction) {
         theCurrentAction = pAction;
+    }
+
+
+
+    @Override
+    public boolean keyDown(int keycode) {
+        return false;
+    }
+
+    @Override
+    public boolean keyUp(int keycode) {
+        return false;
+    }
+
+    @Override
+    public boolean keyTyped(char character) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        System.out.println("touchdown");
+        setCurrentAction(null);
+        return true;
+    }
+
+    @Override
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
+        return false;
+    }
+
+    @Override
+    public boolean mouseMoved(int screenX, int screenY) {
+        return false;
+    }
+
+    @Override
+    public boolean scrolled(int amount) {
+        return false;
     }
 }

@@ -19,7 +19,7 @@ public class TileActor extends Actor {
 
 
     public TileActor() {
-        theTile = new Tile(4);
+        theTile = new Tile(4, null); //empty tile
         theTexture = Assets.get("images/tiles.atlas", "bg");
         theObjectTexture = Assets.get("images/tiles.atlas", "empty");
 
