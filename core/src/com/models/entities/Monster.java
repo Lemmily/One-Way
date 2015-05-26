@@ -7,6 +7,8 @@ import com.models.components.StatsComponent;
 import com.models.listeners.ActionListener;
 import com.models.signals.ActionTaken;
 
+import java.util.Random;
+
 /**
  * Created by emily on 19/05/15.
  */
@@ -17,11 +19,11 @@ public class Monster extends GameEntity implements Actable, Interactable, Action
 
     public Monster() {
         super("potion_health_small");
-        theActionPoints = 5;
+        Random lRandom = new Random();
+        theActionPoints = lRandom.nextInt(10);
         add(new EnemyComponent());
         add(new StatsComponent(5,5,5,5,5,5,5));
     }
-
 
     @Override
     public boolean canPerformAction() {
@@ -37,5 +39,13 @@ public class Monster extends GameEntity implements Actable, Interactable, Action
     @Override
     public void receive(Signal<ActionTaken> signal, ActionTaken pActionTaken) {
         theActionPoints += pActionTaken.theActionPoints;
+    }
+
+    public String toString() {
+        String lString = "Monster: ";
+
+        lString += theActionPoints;
+
+        return lString;
     }
 }

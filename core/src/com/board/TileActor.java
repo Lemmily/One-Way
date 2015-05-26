@@ -25,6 +25,7 @@ public class TileActor extends Actor {
 
         setSize(theTexture.getRegionWidth()*2, theTexture.getRegionHeight()*2);
     }
+
     public TileActor(final Tile pTile) {
         theTexture = Assets.get("images/tiles.atlas", "bg");
         theTile = pTile;

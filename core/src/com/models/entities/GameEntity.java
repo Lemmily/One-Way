@@ -21,6 +21,4 @@ public class GameEntity extends Entity {
     }
 
 
-
-
 }

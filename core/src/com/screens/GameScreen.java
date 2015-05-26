@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.board.Board;
 import com.board.BoardActor;
 import com.board.TileActor;
+import com.models.GameController;
 import com.models.HudController;
 import com.models.PlayerController;
 import com.models.actions.PlayerAction;
@@ -41,12 +42,14 @@ public class GameScreen implements Screen{
     @Override
     public void show() {
 
-        PlayerController.init();
-
         theStage = new Stage(new ScreenViewport());
         theHudStage = new Stage(new ScreenViewport());
 
+        PlayerController.init();
         theHudController = HudController.init(theHudStage);
+
+        theEngine = new Engine();
+        GameController.init(theEngine);
 
         Gdx.input.setInputProcessor(new InputMultiplexer(theStage, theHudStage));
         theBoard = new Board(4);
@@ -55,9 +58,6 @@ public class GameScreen implements Screen{
 
         theStage.addActor(theBoardActor);
         theStage.setDebugAll(true);
-
-        theEngine = new Engine();
-
 
         //make family (entities that have a certain set of components)
         theEngine.addSystem(new ActionSystem(new Comparator<Entity>() {
@@ -74,19 +74,11 @@ public class GameScreen implements Screen{
         }));
 
 
-        Monster lMonster = new Monster();
-        PlayerController.get().registerListener(lMonster);
-        theEngine.addEntity(lMonster);
-
-        lMonster = new Monster();
-        PlayerController.get().registerListener(lMonster);
-        theEngine.addEntity(lMonster);
-        lMonster.add(new StatsComponent(5, 15, 5, 5, 5, 5, 5));
-
         TileActor lFakeButton = new TileActor();
         lFakeButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                System.out.println("Switched to action 1");
                 PlayerController.get().setCurrentAction(new PlayerAction() {
                         @Override
                         public ActionTaken execute() {
@@ -115,6 +107,7 @@ public class GameScreen implements Screen{
         lFakeButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                System.out.println("Switched to action 2");
                 PlayerController.get().setCurrentAction(new PlayerAction() {
                     @Override
                     public ActionTaken execute() {

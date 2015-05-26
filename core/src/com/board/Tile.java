@@ -1,6 +1,8 @@
 package com.board;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.models.GameController;
+import com.models.PlayerController;
 import com.models.entities.GameEntity;
 import com.models.entities.Monster;
 
@@ -17,8 +19,12 @@ public class Tile  {
     public Tile(int pPos) {
         thePos = pPos;
         Random lRandom = new Random();
-        if (lRandom.nextInt(100) < 50)
+        if (lRandom.nextInt(100) < 50) {
             theOccupier = new Monster();
+            System.out.println(theOccupier);
+            PlayerController.get().registerListener((Monster) theOccupier);
+            GameController.get().getEngine().addEntity(theOccupier);
+        }
     }
 
     public GameEntity getOccupier() {

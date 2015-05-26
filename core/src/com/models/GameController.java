@@ -1,7 +1,7 @@
 package com.models;
 
+import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.signals.Signal;
-import com.models.listeners.ActionListener;
 import com.models.signals.ActionTaken;
 
 /**
@@ -11,22 +11,24 @@ public class GameController {
 
 
     private static GameController INSTANCE = null;
+
+
     private Signal<ActionTaken> thePlayerControlsSignal;
+    private Engine theEngine;
 
     public static GameController get() {
         return INSTANCE;
     }
 
-    public static void init(GameController game) {
-        INSTANCE = game;
+    public static void init(Engine pEngine) {
+        INSTANCE = new GameController(pEngine);
     }
 
-
-
-    public GameController() {
+    public GameController(Engine pEngine) {
+        theEngine = pEngine;
     }
 
-    public void registerForActions(ActionListener pListener) {
-        thePlayerControlsSignal.add(pListener);
+    public Engine getEngine() {
+        return theEngine;
     }
 }
