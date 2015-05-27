@@ -1,0 +1,42 @@
+package com.models;
+
+import com.badlogic.ashley.core.Engine;
+import com.badlogic.ashley.signals.Signal;
+import com.board.Board;
+import com.board.BoardActor;
+import com.models.signals.ActionTaken;
+
+/**
+ * Created by emily on 19/05/15.
+ */
+public class GameController {
+
+
+    private static GameController INSTANCE = null;
+
+
+    private Signal<ActionTaken> thePlayerControlsSignal;
+    private Engine theEngine;
+    private BoardActor theBoardActor;
+
+    public static GameController get() {
+        return INSTANCE;
+    }
+
+    public static void init(Engine pEngine) {
+        INSTANCE = new GameController(pEngine);
+    }
+
+    public GameController(Engine pEngine) {
+        theEngine = pEngine;
+        theBoardActor = new BoardActor(pEngine, new Board(4));
+    }
+
+    public Engine getEngine() {
+        return theEngine;
+    }
+
+    public BoardActor getBoard() {
+        return theBoardActor;
+    }
+}

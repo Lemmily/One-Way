@@ -19,6 +19,7 @@ public class Assets {
     public static void queueLoading() {
         manager.load("skins/uiskin.atlas", TextureAtlas.class);
         manager.load("images/tiles.atlas", TextureAtlas.class);
+        manager.load("icons/potions.atlas", TextureAtlas.class);
         manager.load("images/defaultBtn.png", Texture.class);
     }
 

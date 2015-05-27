@@ -1,0 +1,25 @@
+potions.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+potion_health_large
+  rotate: false
+  xy: 2, 2
+  size: 24, 24
+  orig: 24, 24
+  offset: 0, 0
+  index: -1
+potion_health_medium
+  rotate: false
+  xy: 28, 2
+  size: 24, 24
+  orig: 24, 24
+  offset: 0, 0
+  index: -1
+potion_health_small
+  rotate: false
+  xy: 54, 2
+  size: 24, 24
+  orig: 24, 24
+  offset: 0, 0
+  index: -1
