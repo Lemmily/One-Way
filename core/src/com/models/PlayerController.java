@@ -2,6 +2,7 @@ package com.models;
 
 import com.badlogic.ashley.signals.Signal;
 import com.badlogic.gdx.InputProcessor;
+import com.board.Tile;
 import com.models.actions.PlayerAction;
 import com.models.components.Components;
 import com.models.entities.GameEntity;
@@ -24,11 +25,13 @@ public class PlayerController implements InputProcessor {
     }
 
 
+    /**
+     * objects that need to listen to player actions must register to this.
+     */
     private final Signal<ActionTaken> thePlayerControlsSignal;
     private boolean thePlayerMoved;
 
     private PlayerAction theCurrentAction;
-    private Player thePlayer;
 
     /**
      * Singleton(??) To control the interactions made by the player
@@ -36,17 +39,16 @@ public class PlayerController implements InputProcessor {
     private PlayerController() {
         thePlayerControlsSignal = new Signal<>();
 
-        thePlayer = new Player();
         theCurrentAction = null;
     }
 
     public void actionPerformed() {
-        if(theCurrentAction != null) {
+        if(theCurrentAction == null) {
 //            thePlayerControlsSignal.dispatch(theCurrentAction.execute());
             PlayerAction lPlayerAction = new PlayerAction() {
                 @Override
                 public ActionTaken execute() {
-                    GameController.get().getBoard().dropTile();
+                    GameController.get().getBoardActor().dropFirstTile();
                     return new ActionTaken(0);
                 }
 
@@ -62,22 +64,53 @@ public class PlayerController implements InputProcessor {
             };
             thePlayerControlsSignal.dispatch(lPlayerAction.execute());
             thePlayerMoved = false;
+        } else {
+            thePlayerControlsSignal.dispatch(theCurrentAction.execute());
+            thePlayerMoved = true;
         }
     }
 
     public void actionPerformed(GameEntity pGameEntity) {
-        if(theCurrentAction != null) {
-            if (Components.ENEMY.get(pGameEntity) != null)
+        if(theCurrentAction == null) {
+//            thePlayerControlsSignal.dispatch(theCurrentAction.execute());
+
+
+            //temp action to test destruction.
+            PlayerAction lDestructTileAction = new PlayerAction() {
+                @Override
+                public ActionTaken execute() {
+                    GameController.get().getBoardActor().dropFirstTile();
+                    return new ActionTaken(0);
+                }
+
+                @Override
+                public ActionTaken execute(Monster pMonster) {
+                    Tile lTile = GameController.get().getBoardActor().board().findTileWithMonster(pMonster);
+                    GameController.get().getBoardActor().dropTile(lTile.theActor);
+                    return new ActionTaken(0);
+                }
+
+                @Override
+                public ActionTaken execute(Player pPlayer) {
+                    return new ActionTaken(0);
+                }
+
+            };
+            thePlayerControlsSignal.dispatch(lDestructTileAction.execute((Monster)pGameEntity));
+            thePlayerMoved = false;
+        } else {
+                if (Components.ENEMY.get(pGameEntity) != null)
                 thePlayerControlsSignal.dispatch(theCurrentAction.execute((Monster) pGameEntity));
             if (Components.PLAYER.get(pGameEntity) != null)
                 thePlayerControlsSignal.dispatch(theCurrentAction.execute((Player) pGameEntity));
 
             thePlayerMoved = true;
-        } else {
-            if (Components.ENEMY.get(pGameEntity) != null) {
-                //show enemy stats
-            }
         }
+//        else {
+//            if (Components.ENEMY.get(pGameEntity) != null) {
+//                //show enemy stats
+//            }
+//        }
     }
 
     public void registerListener(ActionListener pListener) {
@@ -88,9 +121,6 @@ public class PlayerController implements InputProcessor {
         return thePlayerMoved;
     }
 
-    public Player player() {
-        return thePlayer;
-    }
 
     public void setPlayerMoved(boolean pPlayerMoved) {
         thePlayerMoved = pPlayerMoved;

@@ -6,8 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.models.PlayerController;
 import com.models.entities.Monster;
 
-import java.util.Queue;
-import java.util.concurrent.LinkedBlockingQueue;
+import java.util.LinkedList;
 
 /**
  * Created by emily on 18/05/15.
@@ -19,10 +18,10 @@ public class BoardActor extends Group {
 
     private Board theBoard;
 
-    private Queue<TileActor> theTiles;
+    private LinkedList<TileActor> theTiles;
 
     public BoardActor(Engine pEngine, Board pBoard) {
-        theTiles = new LinkedBlockingQueue<>();
+        theTiles = new LinkedList<>();
         theBoard = pBoard;
 //        TextButton buttonPlay = new TextButton("HEllow", Assets.menuSkin);
 //        addActor(buttonPlay);
@@ -32,7 +31,6 @@ public class BoardActor extends Group {
             theTiles.add(lTile);
             this.addActor(lTile);
         }
-
         registerListeners();
         addToEngine(pEngine);
 //        this.setTouchable(Touchable.childrenOnly);
@@ -51,7 +49,6 @@ public class BoardActor extends Group {
             if (lTileActor.theTile.isOccupied())
                 pEngine.addEntity(lTileActor.theTile.getOccupier());
         }
-
     }
 
     private void registerListeners() {
@@ -61,30 +58,32 @@ public class BoardActor extends Group {
         }
     }
 
-    public void dropTile() {
-        TileActor lTile = theTiles.poll();
+    public void dropFirstTile() {
+        dropTile(theTiles.peekFirst());
+    }
+    public void dropTile(final TileActor pTile) {
         //move tile out
-        lTile.addAction(Actions.sequence(Actions.moveTo(lTile.getX(), lTile.getY() - 40, 1.0f), Actions.fadeOut(0.75f),Actions.run(new Runnable() {
+        pTile.addAction(Actions.sequence(Actions.moveTo(pTile.getX(), pTile.getY() - 64, 0.75f), Actions.fadeOut(0.75f), Actions.run(new Runnable() {
             @Override
             public void run() {
-                System.out.println("dropping first tile!");
+                pTile.remove();
+
             }
         })));
 
 
+        int lIndex = theTiles.indexOf(pTile);
+        theTiles.remove(pTile);
+
         //move all subsequent tiles up
-
-        TileActor lPrevious = lTile;
-
-        for (TileActor lActor : theTiles) {
-//        for (int i = theTiles.size() - 1; i <= lIndex ; i--) {
-//            TileActor lActor = theTiles.get(i);
+        TileActor lPrevious = pTile;
+        for (int i = lIndex; i <= theTiles.size() - 1; i++) {
+            TileActor lActor = theTiles.get(i);
             moveUp(lPrevious, lActor);
             lActor.theTile.thePos -= 1;
             lPrevious = lActor;
         }
 
-        lTile.remove();
     }
 
     private void moveUp(TileActor pPrevious, final TileActor pNext) {
@@ -96,6 +95,10 @@ public class BoardActor extends Group {
                         System.out.println("Moving the tile up" + pNext.theTile.thePos);
                     }
                 })));
+    }
+
+    public Board board() {
+        return theBoard;
     }
 
 }

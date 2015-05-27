@@ -1,5 +1,7 @@
 package com.board;
 
+import com.models.entities.Monster;
+
 import java.util.Stack;
 
 /**
@@ -26,7 +28,15 @@ public class Board {
 
     public void addTile(Tile pTile) {
         theTiles.push(pTile);
+    }
 
+    public Tile findTileWithMonster(Monster pMonster) {
+
+        for(Tile lTile : theTiles) {
+            if(lTile.isOccupied() && pMonster == lTile.getOccupier())
+                return lTile;
+        }
+        return null;
     }
 
 
