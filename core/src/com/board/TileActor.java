@@ -14,7 +14,7 @@ import com.utils.Assets;
 public class TileActor extends Actor {
 
     private TextureRegion theTexture;
-    private Tile theTile;
+    public Tile theTile;
     private TextureRegion theObjectTexture;
 
 
@@ -29,6 +29,7 @@ public class TileActor extends Actor {
     public TileActor(final Tile pTile) {
         theTexture = Assets.get("images/tiles.atlas", "bg");
         theTile = pTile;
+        pTile.theActor = this;
 
         if(theTile.isOccupied()) {
             theObjectTexture = theTile.getTexture();

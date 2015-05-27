@@ -41,13 +41,11 @@ public class GameScreen implements Screen{
         PlayerController.init();
         theEngine = new Engine();
         GameController.init(theEngine);
+        theBoardActor = GameController.get().getBoard();
+        theBoardActor.setPosition(100, 100);
         theHudController = HudController.init(theHudStage);
 
-
         Gdx.input.setInputProcessor(new InputMultiplexer(theStage, theHudStage, PlayerController.get()));
-        theBoard = new Board(4);
-        theBoardActor = new BoardActor(theBoard);
-        theBoardActor.setPosition(100, 100);
 
         theStage.addActor(theBoardActor);
         theStage.setDebugAll(true);

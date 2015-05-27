@@ -41,8 +41,28 @@ public class PlayerController implements InputProcessor {
     }
 
     public void actionPerformed() {
-        thePlayerControlsSignal.dispatch(theCurrentAction.execute());
-        thePlayerMoved = true;
+        if(theCurrentAction != null) {
+//            thePlayerControlsSignal.dispatch(theCurrentAction.execute());
+            PlayerAction lPlayerAction = new PlayerAction() {
+                @Override
+                public ActionTaken execute() {
+                    GameController.get().getBoard().dropTile();
+                    return new ActionTaken(0);
+                }
+
+                @Override
+                public ActionTaken execute(Monster pMonster) {
+                    return new ActionTaken(0);
+                }
+
+                @Override
+                public ActionTaken execute(Player pPlayer) {
+                    return new ActionTaken(0);
+                }
+            };
+            thePlayerControlsSignal.dispatch(lPlayerAction.execute());
+            thePlayerMoved = false;
+        }
     }
 
     public void actionPerformed(GameEntity pGameEntity) {

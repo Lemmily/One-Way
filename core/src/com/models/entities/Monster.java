@@ -14,10 +14,21 @@ import java.util.Random;
 
 public class Monster extends GameEntity implements Actable, Interactable, ActionListener {
 
+    private String theName;
     protected int theActionPoints;
 
     public Monster() {
         super("potion_health_small");
+        Random lRandom = new Random();
+        theActionPoints = lRandom.nextInt(10);
+        add(new EnemyComponent());
+        add(new StatsComponent(5,5,5,5,5,5,5));
+    }
+    public Monster(String pName) {
+        super("potion_health_small");
+
+        theName = pName;
+
         Random lRandom = new Random();
         theActionPoints = lRandom.nextInt(10);
         add(new EnemyComponent());
@@ -31,7 +42,7 @@ public class Monster extends GameEntity implements Actable, Interactable, Action
 
     @Override
     public void doSomething() {
-        System.out.println("did an action!");
+        System.out.println( "Monster " + theName + " did an action!");
         theActionPoints -= 10;
     }
 
@@ -41,8 +52,9 @@ public class Monster extends GameEntity implements Actable, Interactable, Action
     }
 
     public String toString() {
-        String lString = "Monster: ";
+        String lString = "Monster ";
 
+        lString += theName + ": ";
         lString += theActionPoints;
 
         return lString;
