@@ -3,6 +3,7 @@ package com.board;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.models.GameController;
 import com.models.PlayerController;
 import com.models.entities.Monster;
 
@@ -61,13 +62,18 @@ public class BoardActor extends Group {
     public void dropFirstTile() {
         dropTile(theTiles.peekFirst());
     }
+
+    /**
+     *  makes the tile visibly drop whilst signalling all tiles to move up a space. once animation completed
+     *  pTile is removed from systems and engines
+     * @param pTile
+     */
     public void dropTile(final TileActor pTile) {
         //move tile out
-        pTile.addAction(Actions.sequence(Actions.moveTo(pTile.getX(), pTile.getY() - 64, 0.75f), Actions.fadeOut(0.75f), Actions.run(new Runnable() {
+        pTile.addAction(Actions.sequence(Actions.moveTo(pTile.getX(), pTile.getY() - 64, 0.65f), Actions.fadeOut(0.75f), Actions.run(new Runnable() {
             @Override
             public void run() {
-                pTile.remove();
-
+                removeTile(pTile);
             }
         })));
 
@@ -86,6 +92,25 @@ public class BoardActor extends Group {
 
     }
 
+
+    /**
+     * removes and deregisters the occupier from  listening to the signals and removes from the engine.
+     * @param pTile
+     */
+    private void removeTile(TileActor pTile) {
+        if(pTile.theTile.isOccupied()) {
+            PlayerController.get().deregisterListener((Monster) pTile.theTile.getOccupier());
+            GameController.get().getEngine().removeEntity(pTile.theTile.getOccupier());
+        }
+        pTile.remove();
+
+    }
+
+    /**
+     * moves the next tile to the previous tile's location.
+     * @param pPrevious
+     * @param pNext
+     */
     private void moveUp(TileActor pPrevious, final TileActor pNext) {
         pNext.addAction(Actions.sequence(
                 Actions.moveTo(pPrevious.getX(), pPrevious.getY(), 1.0f),
@@ -97,6 +122,10 @@ public class BoardActor extends Group {
                 })));
     }
 
+    /**
+     *
+     * @return the board object
+     */
     public Board board() {
         return theBoard;
     }

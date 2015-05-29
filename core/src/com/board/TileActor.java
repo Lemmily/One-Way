@@ -12,11 +12,9 @@ import com.utils.Assets;
  * Created by emily on 18/05/15.
  */
 public class TileActor extends Actor {
-
     private TextureRegion theTexture;
     public Tile theTile;
     private TextureRegion theObjectTexture;
-
 
     public TileActor() {
         theTile = new Tile(4, null); //empty tile

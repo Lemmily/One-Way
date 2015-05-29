@@ -21,4 +21,7 @@ public class GameEntity extends Entity {
     }
 
 
+    public String getStats() {
+        return "OVERWRITE \"getStats()\" method";
+    }
 }

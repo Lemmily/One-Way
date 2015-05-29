@@ -26,7 +26,6 @@ public class StatsComponent extends Component{
         theDexterity = pDexterity;
         theIntelligence = pIntelligence;
         theConstitution = pConstitution;
-
         theCharisma = pCharisma;
         theWisdom = pWisdom;
         theLuck = pLuck;

@@ -10,7 +10,6 @@ import java.util.Random;
  * Created by emily on 18/05/15.
  */
 public class Tile  {
-
     public int thePos;
     private GameEntity theOccupier;
     public TileActor theActor;
@@ -33,7 +32,6 @@ public class Tile  {
         theOccupier = pGameEntity;
     }
 
-
     public GameEntity getOccupier() {
         return theOccupier;
     }
@@ -45,4 +43,5 @@ public class Tile  {
     public TextureRegion getTexture() {
         return theOccupier.theTexture;
     }
+
 }

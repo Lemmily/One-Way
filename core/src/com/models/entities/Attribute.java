@@ -1,12 +1,11 @@
 package com.models.entities;
 
-import com.badlogic.ashley.core.Entity;
 import com.utils.Enums;
 
 /**
  * Created by emily on 19/05/15.
  */
-public class Attribute extends Entity {
+public class Attribute {
 
     private Enums.Attributes theType;
 
@@ -19,7 +18,7 @@ public class Attribute extends Entity {
     }
 
     /**
-     * @return modifier to things like the skill check or attack/defense rolls etc.
+     * @return modifier for things like the skill check or attack/defense rolls etc.
      */
     public int getModifier() {
         if (theValue <= 1)      return -5;
@@ -36,7 +35,28 @@ public class Attribute extends Entity {
         else return 6;
     }
 
+    /**
+     * @return value of attribute
+     */
     public int getValue() {
+        return theValue;
+    }
+
+    /**
+     * @param pNum amount to increase by
+     * @return the new value after the change.
+     */
+    public int increaseBy(int pNum) {
+        theValue += Math.abs(pNum);
+        return theValue;
+    }
+
+    /**
+     * @param pNum amount to decrease by
+     * @return the new value after the change.
+     */
+    public int decreaseBy(int pNum) {
+        theValue -= Math.abs(pNum);
         return theValue;
     }
 }

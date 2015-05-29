@@ -13,8 +13,6 @@ public class GameController {
 
     private static GameController INSTANCE = null;
 
-
-//    private Signal<ActionTaken> thePlayerControlsSignal;
     private Engine theEngine;
     private BoardActor theBoardActor;
     private Player thePlayer;

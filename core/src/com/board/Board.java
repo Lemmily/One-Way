@@ -11,11 +11,8 @@ import java.util.Stack;
  * board logic
  */
 public class Board {
-
     private int theSize;
-
     public Stack<Tile> theTiles = new Stack<>();
-
 
     public Board(int pSize) {
         theSize = pSize;
@@ -25,13 +22,11 @@ public class Board {
         }
     }
 
-
     public void addTile(Tile pTile) {
         theTiles.push(pTile);
     }
 
     public Tile findTileWithMonster(Monster pMonster) {
-
         for(Tile lTile : theTiles) {
             if(lTile.isOccupied() && pMonster == lTile.getOccupier())
                 return lTile;
@@ -39,6 +34,7 @@ public class Board {
         return null;
     }
 
+    public void disposeTile(Tile pTile) {
 
-
+    }
 }

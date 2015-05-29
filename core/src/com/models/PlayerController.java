@@ -2,7 +2,6 @@ package com.models;
 
 import com.badlogic.ashley.signals.Signal;
 import com.badlogic.gdx.InputProcessor;
-import com.board.Tile;
 import com.models.actions.PlayerAction;
 import com.models.components.Components;
 import com.models.entities.GameEntity;
@@ -24,7 +23,6 @@ public class PlayerController implements InputProcessor {
         INSTANCE = new PlayerController();
     }
 
-
     /**
      * objects that need to listen to player actions must register to this.
      */
@@ -45,25 +43,7 @@ public class PlayerController implements InputProcessor {
     public void actionPerformed() {
         if(theCurrentAction == null) {
 //            thePlayerControlsSignal.dispatch(theCurrentAction.execute());
-            PlayerAction lPlayerAction = new PlayerAction() {
-                @Override
-                public ActionTaken execute() {
-                    GameController.get().getBoardActor().dropFirstTile();
-                    return new ActionTaken(0);
-                }
-
-                @Override
-                public ActionTaken execute(Monster pMonster) {
-                    return new ActionTaken(0);
-                }
-
-                @Override
-                public ActionTaken execute(Player pPlayer) {
-                    return new ActionTaken(0);
-                }
-            };
-            thePlayerControlsSignal.dispatch(lPlayerAction.execute());
-            thePlayerMoved = false;
+            HudController.get().statWin().setLabel("");
         } else {
             thePlayerControlsSignal.dispatch(theCurrentAction.execute());
             thePlayerMoved = true;
@@ -72,32 +52,9 @@ public class PlayerController implements InputProcessor {
 
     public void actionPerformed(GameEntity pGameEntity) {
         if(theCurrentAction == null) {
-//            thePlayerControlsSignal.dispatch(theCurrentAction.execute());
+            //update stats window.
+            HudController.get().statWin().setLabel(pGameEntity.getStats());
 
-
-            //temp action to test destruction.
-            PlayerAction lDestructTileAction = new PlayerAction() {
-                @Override
-                public ActionTaken execute() {
-                    GameController.get().getBoardActor().dropFirstTile();
-                    return new ActionTaken(0);
-                }
-
-                @Override
-                public ActionTaken execute(Monster pMonster) {
-                    Tile lTile = GameController.get().getBoardActor().board().findTileWithMonster(pMonster);
-                    GameController.get().getBoardActor().dropTile(lTile.theActor);
-                    return new ActionTaken(0);
-                }
-
-                @Override
-                public ActionTaken execute(Player pPlayer) {
-                    return new ActionTaken(0);
-                }
-
-            };
-            thePlayerControlsSignal.dispatch(lDestructTileAction.execute((Monster)pGameEntity));
-            thePlayerMoved = false;
         } else {
                 if (Components.ENEMY.get(pGameEntity) != null)
                 thePlayerControlsSignal.dispatch(theCurrentAction.execute((Monster) pGameEntity));
@@ -117,10 +74,13 @@ public class PlayerController implements InputProcessor {
         thePlayerControlsSignal.add(pListener);
     }
 
+    public void deregisterListener(ActionListener pListener) {
+        thePlayerControlsSignal.remove(pListener);
+    }
+
     public boolean playerMoved() {
         return thePlayerMoved;
     }
-
 
     public void setPlayerMoved(boolean pPlayerMoved) {
         thePlayerMoved = pPlayerMoved;
@@ -129,8 +89,6 @@ public class PlayerController implements InputProcessor {
     public void setCurrentAction(PlayerAction pAction) {
         theCurrentAction = pAction;
     }
-
-
 
     @Override
     public boolean keyDown(int keycode) {

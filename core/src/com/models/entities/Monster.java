@@ -51,6 +51,12 @@ public class Monster extends GameEntity implements Actable, Interactable, Action
         theActionPoints += pActionTaken.theActionPoints;
     }
 
+    @Override
+    public String getStats() {
+
+        return "";
+    }
+
     public String toString() {
         String lString = "Monster ";
 
@@ -59,4 +65,5 @@ public class Monster extends GameEntity implements Actable, Interactable, Action
 
         return lString;
     }
+
 }
