@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.models.PlayerController;
 import com.utils.Assets;
@@ -13,11 +14,15 @@ import com.utils.Assets;
  */
 public class TileActor extends Actor {
     private TextureRegion theTexture;
-    public Tile theTile;
     private TextureRegion theObjectTexture;
+
+    private Label theLabel;
+
+    public Tile theTile;
 
     public TileActor() {
         theTile = new Tile(4, null); //empty tile
+
         theTexture = Assets.get("images/tiles.atlas", "bg");
         theObjectTexture = Assets.get("images/tiles.atlas", "empty");
 

@@ -7,7 +7,7 @@ import com.utils.Assets;
 /**
  * Created by emily on 19/05/15.
  */
-public class GameEntity extends Entity {
+public abstract class GameEntity extends Entity {
 
 
     public TextureRegion theTexture;
@@ -21,6 +21,11 @@ public class GameEntity extends Entity {
     }
 
 
+    /**
+     * called to get the information for the statistics window.
+     *
+     * @return
+     */
     public String getStats() {
         return "OVERWRITE \"getStats()\" method";
     }

@@ -47,8 +47,6 @@ public class SplashScreen implements Screen {
                 animationDone = true;
             }
         })));
-
-        //Assets.manager.clear(); 
         //not necessary, only when splash called more then once
         Assets.queueLoading();
     }

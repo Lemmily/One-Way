@@ -49,6 +49,7 @@ public class GameScreen implements Screen{
 
         theStage.addActor(theBoardActor);
         theStage.setDebugAll(true);
+        theHudStage.setDebugAll(true);
 
         //make family (entities that have a certain set of components)
         theEngine.addSystem(new ActionSystem(new Comparator<Entity>() {

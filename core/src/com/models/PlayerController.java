@@ -50,17 +50,16 @@ public class PlayerController implements InputProcessor {
         }
     }
 
+    //TODO: add in the ability for the action to check the ActionCondition has been met before execution.
     public void actionPerformed(GameEntity pGameEntity) {
         if(theCurrentAction == null) {
             //update stats window.
             HudController.get().statWin().setLabel(pGameEntity.getStats());
-
         } else {
                 if (Components.ENEMY.get(pGameEntity) != null)
                 thePlayerControlsSignal.dispatch(theCurrentAction.execute((Monster) pGameEntity));
             if (Components.PLAYER.get(pGameEntity) != null)
                 thePlayerControlsSignal.dispatch(theCurrentAction.execute((Player) pGameEntity));
-
             thePlayerMoved = true;
         }
 //        else {
@@ -70,22 +69,41 @@ public class PlayerController implements InputProcessor {
 //        }
     }
 
+    /**
+     * register a listener to the player's actions.
+     *
+     * @param pListener
+     */
     public void registerListener(ActionListener pListener) {
         thePlayerControlsSignal.add(pListener);
     }
 
+    /**
+     * deregister a listener from the player's actions.
+     *
+     * @param pListener
+     */
     public void deregisterListener(ActionListener pListener) {
         thePlayerControlsSignal.remove(pListener);
     }
 
+    /**
+     * @return boolean for whether the player has moved.
+     */
     public boolean playerMoved() {
         return thePlayerMoved;
     }
 
+    /**
+     * @param pPlayerMoved se tthe player moved to this.
+     */
     public void setPlayerMoved(boolean pPlayerMoved) {
         thePlayerMoved = pPlayerMoved;
     }
 
+    /**
+     * @param pAction set the current action to this.
+     */
     public void setCurrentAction(PlayerAction pAction) {
         theCurrentAction = pAction;
     }

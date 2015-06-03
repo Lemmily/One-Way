@@ -25,9 +25,14 @@ public class GameController {
         INSTANCE = new GameController(pEngine);
     }
 
+    /**
+     * singleton thing
+     *
+     * @param pEngine
+     */
     public GameController(Engine pEngine) {
         theEngine = pEngine;
-        theBoardActor = new BoardActor(pEngine, new Board(4));
+        theBoardActor = new BoardActor(pEngine, new Board(8));
         thePlayer = new Player();
     }
 

@@ -1,6 +1,7 @@
 package com.board;
 
 
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.utils.Assets;
@@ -16,9 +17,16 @@ public class StatisticWindowActor extends Window {
         super(title, Assets.menuSkin);
         theLabel = new Label("", Assets.menuSkin);
         add(theLabel);
+        this.setTouchable(Touchable.disabled);
     }
 
-
+    /**
+     * crudely cuts text into {@param pLineWidth} by inserting newlines into the text
+     *
+     * @param pText      text to format
+     * @param pLineWidth width of text
+     * @return text filled with new lines.
+     */
     public String cutNewLines(String pText, int pLineWidth) {
         String s = "";
 

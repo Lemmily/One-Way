@@ -20,6 +20,7 @@ public class BoardActor extends Group {
     private Board theBoard;
 
     private LinkedList<TileActor> theTiles;
+    private boolean theAnimating = false;
 
     public BoardActor(Engine pEngine, Board pBoard) {
         theTiles = new LinkedList<>();
@@ -69,29 +70,30 @@ public class BoardActor extends Group {
      * @param pTile
      */
     public void dropTile(final TileActor pTile) {
-        //move tile out
-        pTile.addAction(Actions.sequence(Actions.moveTo(pTile.getX(), pTile.getY() - 64, 0.65f), Actions.fadeOut(0.75f), Actions.run(new Runnable() {
-            @Override
-            public void run() {
-                removeTile(pTile);
+
+        if (!theAnimating) {
+            //move tile out
+            pTile.addAction(Actions.sequence(Actions.moveTo(pTile.getX(), pTile.getY() - 64, 0.65f), Actions.fadeOut(0.75f), Actions.run(new Runnable() {
+                @Override
+                public void run() {
+                    removeTile(pTile);
+                }
+            })));
+
+            int lIndex = theTiles.indexOf(pTile);
+            theTiles.remove(pTile);
+
+            //move all subsequent tiles up
+            TileActor lPrevious = pTile;
+            for (int i = lIndex; i <= theTiles.size() - 1; i++) {
+                TileActor lActor = theTiles.get(i);
+                moveUp(lPrevious, lActor);
+                lActor.theTile.thePos -= 1;
+                lPrevious = lActor;
+                theAnimating = true;
             }
-        })));
-
-
-        int lIndex = theTiles.indexOf(pTile);
-        theTiles.remove(pTile);
-
-        //move all subsequent tiles up
-        TileActor lPrevious = pTile;
-        for (int i = lIndex; i <= theTiles.size() - 1; i++) {
-            TileActor lActor = theTiles.get(i);
-            moveUp(lPrevious, lActor);
-            lActor.theTile.thePos -= 1;
-            lPrevious = lActor;
         }
-
     }
-
 
     /**
      * removes and deregisters the occupier from  listening to the signals and removes from the engine.
@@ -103,7 +105,6 @@ public class BoardActor extends Group {
             GameController.get().getEngine().removeEntity(pTile.theTile.getOccupier());
         }
         pTile.remove();
-
     }
 
     /**
@@ -118,6 +119,7 @@ public class BoardActor extends Group {
                     @Override
                     public void run() {
                         System.out.println("Moving the tile up" + pNext.theTile.thePos);
+                        theAnimating = false;
                     }
                 })));
     }

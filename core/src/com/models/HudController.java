@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.board.StatisticWindowActor;
 import com.board.Tile;
 import com.board.TileActor;
+import com.models.actions.ActionCondition;
 import com.models.actions.PlayerAction;
 import com.models.entities.Monster;
 import com.models.entities.Player;
@@ -52,27 +53,44 @@ public class HudController implements EntityListener {
         theStatWin.setPosition(Gdx.graphics.getWidth() - theStatWin.getWidth(), Gdx.graphics.getHeight() - theStatWin.getHeight());
 
 
-
         TileActor lFakeButton = new TileActor();
         lFakeButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Switched to action 1");
                 PlayerController.get().setCurrentAction(new PlayerAction() {
+
+                    // is this weird gross code?
+                    {
+                        //instance initializer
+                        theActionCondition = new ActionCondition() {
+                            @Override
+                            public boolean hasMetCondtion() {
+                                // some test condition.
+
+                                System.out.println("Dummy Condition has been met! (always met)");
+                                return true;
+                            }
+                        };
+                    }
+
                     @Override
                     public ActionTaken execute() {
+                        checkCondition();
                         System.out.println("action 1 performed on nothing");
                         return new ActionTaken(5);
                     }
 
                     @Override
                     public ActionTaken execute(Monster pMonster) {
+                        checkCondition();
                         System.out.println("action 1 performed on monster");
                         return new ActionTaken(5);
                     }
 
                     @Override
                     public ActionTaken execute(Player pPlayer) {
+                        checkCondition();
                         System.out.println("action 1 performed on player");
                         return new ActionTaken(5);
                     }
@@ -105,11 +123,11 @@ public class HudController implements EntityListener {
                         System.out.println("action 2 performed on player");
                         return new ActionTaken(10);
                     }
+
                 });
             }
         });
         theStage.addActor(lFakeButton);
-
 
         lFakeButton = new TileActor();
         lFakeButton.setPosition(250, 0);
@@ -135,6 +153,8 @@ public class HudController implements EntityListener {
                     public ActionTaken execute(Player pPlayer) {
                         return new ActionTaken(0);
                     }
+
+
                 });
             }
         });

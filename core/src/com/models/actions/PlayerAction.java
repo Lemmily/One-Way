@@ -7,28 +7,37 @@ import com.models.signals.ActionTaken;
 /**
  * Created by emily on 20/05/15.
  */
-public interface PlayerAction {
+public abstract class PlayerAction {
 
-    public ActionTaken execute();
+    protected ActionCondition theActionCondition = null;
+
+    public abstract ActionTaken execute();
 
     /**
      * for performing action on a monster (eg. attack)
      * @param pMonster
      */
-    public ActionTaken execute(Monster pMonster);
+    public abstract ActionTaken execute(Monster pMonster);
 
     /**
      * for performing action on the player (eg. potion drink)
      * @param pPlayer
      */
-    public ActionTaken execute(Player pPlayer);
+    public abstract ActionTaken execute(Player pPlayer);
 
+    /**
+     * @return true if has a condition, false otherwise
+     */
+    public boolean hasCondition() {
+        return theActionCondition != null;
+    }
 
+    public boolean checkCondition() {
+        return theActionCondition.hasMetCondtion();
+    }
 //    /**
 //     *
 //     * @return object with ap cost.
 //     */
 //    public ActionTaken getCost();
-
-
 }
