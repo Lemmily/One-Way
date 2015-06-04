@@ -5,6 +5,6 @@ package com.models.actions;
  */
 public interface ActionCondition {
 
-    public boolean hasMetCondtion();
+    boolean hasMetCondtion();
 
 }

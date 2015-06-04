@@ -52,7 +52,6 @@ public class Monster extends GameEntity implements Actable, Interactable, Action
     }
 
 
-
     public String toString() {
         String lString = "Monster ";
 

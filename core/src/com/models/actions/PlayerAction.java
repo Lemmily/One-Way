@@ -10,6 +10,7 @@ import com.models.signals.ActionTaken;
 public abstract class PlayerAction {
 
     protected ActionCondition theActionCondition = null;
+    protected String theName = "Unnamed";
 
     public abstract ActionTaken execute();
 
@@ -34,6 +35,14 @@ public abstract class PlayerAction {
 
     public boolean checkCondition() {
         return theActionCondition.hasMetCondtion();
+    }
+
+    public String getName() {
+        return theName;
+    }
+
+    public void setName(String pName) {
+        theName = pName;
     }
 //    /**
 //     *

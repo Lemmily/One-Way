@@ -105,7 +105,14 @@ public class PlayerController implements InputProcessor {
      * @param pAction set the current action to this.
      */
     public void setCurrentAction(PlayerAction pAction) {
-        theCurrentAction = pAction;
+        if(pAction == null) {
+            theCurrentAction = null;
+            HudController.get().setTooltip("Action selection cleared");
+
+        } else {
+            HudController.get().setTooltip(pAction.getName() + " was selected");
+            theCurrentAction = pAction;
+        }
     }
 
     @Override
