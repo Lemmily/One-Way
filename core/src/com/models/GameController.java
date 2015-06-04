@@ -32,7 +32,7 @@ public class GameController {
      */
     public GameController(Engine pEngine) {
         theEngine = pEngine;
-        theBoardActor = new BoardActor(pEngine, new Board(8));
+        theBoardActor = new BoardActor(pEngine, new Board(8), new Player());
         thePlayer = new Player();
     }
 

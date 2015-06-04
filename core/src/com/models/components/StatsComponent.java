@@ -30,6 +30,7 @@ public class StatsComponent extends Component{
         theWisdom = pWisdom;
         theLuck = pLuck;
     }
+
     public StatsComponent(int pStrength, int pDexterity, int pIntelligence, int pConstitution, int pCharisma, int pWisdom, int pLuck) {
         theStrength = new Attribute(Enums.Attributes.Strength, pStrength);
         theDexterity = new Attribute(Enums.Attributes.Dexterity, pDexterity);

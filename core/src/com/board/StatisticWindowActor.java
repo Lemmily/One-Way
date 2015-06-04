@@ -45,7 +45,7 @@ public class StatisticWindowActor extends Window {
     }
 
     public void setLabel(String pText) {
-        theLabel.setText(cutNewLines(pText, 10));
+        theLabel.setText(cutNewLines(pText, 18));
     }
 
 }

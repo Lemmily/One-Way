@@ -61,4 +61,10 @@ public class Monster extends GameEntity implements Actable, Interactable, Action
         return lString;
     }
 
+    @Override
+    public String getStats() {
+
+        return "Monsters are regularly evil creatures!.. ";
+    }
+
 }

@@ -39,7 +39,7 @@ public class Assets {
 
     public static Texture get(String s) {
         //TODO: some sort of catch for unloaded resources?
-        return manager.get("images/" + s, Texture.class);
+        return manager.get("icons/" + s, Texture.class);
     }
 
     public static TextureRegion get(String pAtlas, String pRegion) {

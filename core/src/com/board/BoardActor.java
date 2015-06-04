@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.models.GameController;
 import com.models.PlayerController;
 import com.models.entities.Monster;
+import com.models.entities.Player;
 
 import java.util.LinkedList;
 
@@ -20,16 +21,20 @@ public class BoardActor extends Group {
     private Board theBoard;
 
     private LinkedList<TileActor> theTiles;
+    private TileActor thePlayer;
     private boolean theAnimating = false;
 
-    public BoardActor(Engine pEngine, Board pBoard) {
+    public BoardActor(Engine pEngine, Board pBoard, Player pPlayer) {
+        thePlayer = new TileActor(new Tile(-1, pPlayer));
+        thePlayer.setPosition(0, 0);
+        addActor(thePlayer);
         theTiles = new LinkedList<>();
         theBoard = pBoard;
 //        TextButton buttonPlay = new TextButton("HEllow", Assets.menuSkin);
 //        addActor(buttonPlay);
         for (int i = 0; i < pBoard.theTiles.size(); i++) {
             TileActor lTile = new TileActor(pBoard.theTiles.get(i));
-            lTile.setPosition(i * (lTile.getWidth()), 0);
+            lTile.setPosition(lTile.getWidth() + 10 + i * (lTile.getWidth()), 0);
             theTiles.add(lTile);
             this.addActor(lTile);
         }

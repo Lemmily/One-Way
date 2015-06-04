@@ -35,7 +35,7 @@ public class TileActor extends Actor {
         pTile.theActor = this;
 
         if(theTile.isOccupied()) {
-            theObjectTexture = theTile.getTexture();
+            setObjectTexture("icons/potions.atlas", theTile.getTexture());
         } else {
             theObjectTexture = Assets.get("images/tiles.atlas", "empty");
         }
@@ -76,6 +76,10 @@ public class TileActor extends Actor {
 
     public void setObjectTexture(TextureRegion pObjectTexture) {
         theObjectTexture = pObjectTexture;
+    }
+
+    public void setObjectTexture(String pAtlas, String pRegion) {
+        theObjectTexture = Assets.get(pAtlas, pRegion);
     }
 
     @Override

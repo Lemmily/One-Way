@@ -9,8 +9,14 @@ import com.models.components.StatsComponent;
 public class Player extends GameEntity {
 
     public Player() {
-        super();
-        add(new StatsComponent(1,1,1,1,1,1,1));
+        super("potion_health_large");
+        add(new StatsComponent(1, 1, 1, 1, 1, 1, 1));
         add(new PlayerComponent());
+    }
+
+
+    @Override
+    public String getStats() {
+        return "Player!";
     }
 }

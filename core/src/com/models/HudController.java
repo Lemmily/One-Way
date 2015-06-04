@@ -59,21 +59,20 @@ public class HudController implements EntityListener {
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Switched to action 1");
                 PlayerController.get().setCurrentAction(new PlayerAction() {
-
                     // is this weird gross code?
                     {
+//                        theName = "Conditional Action";
+                        setName("Conditional Action");
                         //instance initializer
                         theActionCondition = new ActionCondition() {
                             @Override
                             public boolean hasMetCondtion() {
                                 // some test condition.
-
                                 System.out.println("Dummy Condition has been met! (always met)");
                                 return true;
                             }
                         };
                     }
-
                     @Override
                     public ActionTaken execute() {
                         checkCondition();

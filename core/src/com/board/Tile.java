@@ -1,6 +1,5 @@
 package com.board;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.models.entities.GameEntity;
 import com.models.entities.Monster;
 
@@ -10,7 +9,7 @@ import java.util.Random;
  * Created by emily on 18/05/15.
  */
 public class Tile  {
-    public int thePos;
+    public int thePos; // -1 is player pos, 0 < are board slots
     private GameEntity theOccupier;
     public TileActor theActor;
 
@@ -32,6 +31,7 @@ public class Tile  {
         theOccupier = pGameEntity;
     }
 
+
     public GameEntity getOccupier() {
         return theOccupier;
     }
@@ -40,7 +40,7 @@ public class Tile  {
         return theOccupier != null;
     }
 
-    public TextureRegion getTexture() {
+    public String getTexture() {
         return theOccupier.theTexture;
     }
 
