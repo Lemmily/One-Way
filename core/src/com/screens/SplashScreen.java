@@ -11,7 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.utils.Assets;
 
 public class SplashScreen implements Screen {
-    private Texture texture = new Texture(Gdx.files.internal("badlogic.jpg"));
+    private Texture texture = new Texture(Gdx.files.internal("images/blob.png"));
     private Image splashImage = new Image(texture);
     private Stage stage = new Stage();
 
@@ -39,7 +39,6 @@ public class SplashScreen implements Screen {
     @Override
     public void show() {
         stage.addActor(splashImage);
-
         splashImage.addAction(Actions.sequence(Actions.alpha(0)
                 ,Actions.fadeIn(0.75f),Actions.delay(1.5f),Actions.run(new Runnable() {
             @Override

@@ -39,8 +39,6 @@ public class ActionSystem extends SortedIteratingSystem {
         if(lMonster.canPerformAction())
             lMonster.doSomething();
     }
-
-
 //
 //    @Override
 //    public void addedToEngine(Engine engine) {

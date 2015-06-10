@@ -33,8 +33,11 @@ public abstract class PlayerAction {
         return theActionCondition != null;
     }
 
+    /**
+     * @return true when either the action has NO condition, or the condition has been met.
+     */
     public boolean checkCondition() {
-        return theActionCondition.hasMetCondtion();
+        return theActionCondition == null || theActionCondition.hasMetCondtion();
     }
 
     public String getName() {

@@ -7,4 +7,5 @@ public interface ActionCondition {
 
     boolean hasMetCondtion();
 
+
 }

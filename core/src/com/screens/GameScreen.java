@@ -34,7 +34,6 @@ public class GameScreen implements Screen{
 
     @Override
     public void show() {
-
         theStage = new Stage(new ScreenViewport());
         theHudStage = new Stage(new ScreenViewport());
 
@@ -56,6 +55,7 @@ public class GameScreen implements Screen{
             @Override
             /**
              * sorts into descending order of dexterity
+             * TODO: extract initiative? for turns.
              */
             public int compare(Entity pEntity_1, Entity pEntity_2) {
                 StatsComponent lStat_1 = Components.STATS.get(pEntity_1);

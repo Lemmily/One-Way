@@ -30,7 +30,6 @@ public class StatisticWindowActor extends Window {
     public String cutNewLines(String pText, int pLineWidth) {
         String s = "";
 
-//        pText.split()
         if (pText.length() > pLineWidth) {
             int lNum = pText.length() / pLineWidth;
             for (int i = 1; i <= lNum; i++) {
@@ -40,7 +39,6 @@ public class StatisticWindowActor extends Window {
         } else {
             s = pText;
         }
-
         return s;
     }
 

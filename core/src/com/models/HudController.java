@@ -75,9 +75,12 @@ public class HudController implements EntityListener {
                     }
                     @Override
                     public ActionTaken execute() {
-                        checkCondition();
-                        System.out.println("action 1 performed on nothing");
-                        return new ActionTaken(5);
+                        if(checkCondition()) {
+                            System.out.println("action 1 performed on nothing");
+                            return new ActionTaken(5);
+                        } else {
+                            return null;
+                        }
                     }
 
                     @Override

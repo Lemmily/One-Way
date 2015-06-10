@@ -12,4 +12,6 @@ public class Components {
             .getFor(StatsComponent.class);
     public static final ComponentMapper<PlayerComponent> PLAYER = ComponentMapper
             .getFor(PlayerComponent.class);
+    public static final ComponentMapper<EquipmentComponent> EQUIPMENT = ComponentMapper
+            .getFor(EquipmentComponent.class);
 }

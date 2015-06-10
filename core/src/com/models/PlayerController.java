@@ -45,22 +45,26 @@ public class PlayerController implements InputProcessor {
 //            thePlayerControlsSignal.dispatch(theCurrentAction.execute());
             HudController.get().statWin().setLabel("");
         } else {
-            thePlayerControlsSignal.dispatch(theCurrentAction.execute());
-            thePlayerMoved = true;
+            ActionTaken lActionTaken = theCurrentAction.execute();
+            thePlayerControlsSignal.dispatch(lActionTaken);
+            thePlayerMoved = lActionTaken.thePlayerMoved;
         }
     }
 
-    //TODO: add in the ability for the action to check the ActionCondition has been met before execution.
     public void actionPerformed(GameEntity pGameEntity) {
         if(theCurrentAction == null) {
             //update stats window.
             HudController.get().statWin().setLabel(pGameEntity.getStats());
         } else {
-                if (Components.ENEMY.get(pGameEntity) != null)
-                thePlayerControlsSignal.dispatch(theCurrentAction.execute((Monster) pGameEntity));
-            if (Components.PLAYER.get(pGameEntity) != null)
-                thePlayerControlsSignal.dispatch(theCurrentAction.execute((Player) pGameEntity));
-            thePlayerMoved = true;
+            ActionTaken lActionTaken = null;
+            if (Components.ENEMY.get(pGameEntity) != null) {
+                lActionTaken = theCurrentAction.execute((Monster) pGameEntity);
+                thePlayerControlsSignal.dispatch(lActionTaken);
+            } else if (Components.PLAYER.get(pGameEntity) != null) {
+                lActionTaken = theCurrentAction.execute((Player) pGameEntity);
+                thePlayerControlsSignal.dispatch(lActionTaken);
+            }
+            thePlayerMoved = lActionTaken != null && lActionTaken.thePlayerMoved;
         }
 //        else {
 //            if (Components.ENEMY.get(pGameEntity) != null) {
