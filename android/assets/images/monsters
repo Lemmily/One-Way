@@ -1,0 +1,54 @@
+
+[ghost]
+name = ghost
+type = enemy
+tile = 0, 0
+image = data/monsters_x24.png
+base stats = [4, 4, 8, 6, 4, 8, 4]
+
+[pirate]
+name = pirate
+type = enemy
+tile = 1, 0
+tilesheet = data/monsters_x24.png
+base_stats = [7, 7, 11, 8, 10, 3, 9]
+
+
+[slime]
+name = slime
+type= enemy
+tile = 2, 0
+tilesheet = data/monsters_x24.png
+base_stats = [5, 5, 5, 2, 2, 2, 5]
+
+[orc]
+name = Orc
+type = orc
+tilesheet = data/monsters_2_x24.png
+tile = 0,0
+
+base_stats = [9, 10, 8, 4, 3, 4, 3]
+equipment slots = ["helmet","torso", "legs", "gloves", "left-hand", "right-hand"] etc
+abilities = 
+
+[goblin]
+name = Orc
+type = orc
+tilesheet = data/monsters_2_x24.png
+tile = 0,0
+
+base_stats = [6, 5, 6, 6, 3, 4, 3]
+equipment slots = ["helmet","torso", "legs", "gloves", "left-hand", "right-hand"] etc
+abilities = 
+
+
+###Template
+[base name]
+name = Possibly name generation rules.
+type = what category does it fit in?
+tilesheet = image file that the sprite is on
+tile = x,y sprite tile position on tilesheet.
+
+base_stats = ["str", "con", "dex", "int", "cha", "wis", "luc"]
+equipment slots = ["helmet","Torso", "Legs"] etc
+ 

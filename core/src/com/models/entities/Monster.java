@@ -24,6 +24,7 @@ public class Monster extends GameEntity implements Actable, Interactable, Action
         add(new EnemyComponent());
         add(new StatsComponent(5,5,5,5,5,5,5));
     }
+
     public Monster(String pName) {
         super("potion_health_small");
 
