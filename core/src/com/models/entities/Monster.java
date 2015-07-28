@@ -49,7 +49,9 @@ public class Monster extends GameEntity implements Actable, Interactable, Action
 
     @Override
     public void receive(Signal<ActionTaken> signal, ActionTaken pActionTaken) {
-        theActionPoints += pActionTaken.theActionPoints;
+        if (pActionTaken != null) {
+            theActionPoints += pActionTaken.theActionPoints;
+        }
     }
 
 

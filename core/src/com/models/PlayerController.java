@@ -46,8 +46,10 @@ public class PlayerController implements InputProcessor {
             HudController.get().statWin().setLabel("");
         } else {
             ActionTaken lActionTaken = theCurrentAction.execute();
-            thePlayerControlsSignal.dispatch(lActionTaken);
-            thePlayerMoved = lActionTaken.thePlayerMoved;
+            if (lActionTaken != null) {
+                thePlayerControlsSignal.dispatch(lActionTaken);
+                thePlayerMoved = lActionTaken.thePlayerMoved;
+            }
         }
     }
 

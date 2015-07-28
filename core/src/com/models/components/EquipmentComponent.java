@@ -30,6 +30,7 @@ public class EquipmentComponent extends Component {
     public void equipItem(Item pItem) {
         if (hasSlot(pItem.equippableSlot())) {
             System.out.println("hi");
+
         }
     }
 

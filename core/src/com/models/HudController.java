@@ -41,7 +41,7 @@ public class HudController implements EntityListener {
     public HudController(Stage pStage) {
         theStage = pStage;
 
-        theTooltip = new Tooltip(pStage.getViewport().getScreenWidth()/2, 60);
+        theTooltip = new Tooltip(pStage.getViewport().getScreenWidth() / 2, 0);
         theStage.addActor(theTooltip);
 
         theFPS= new Tooltip(0, pStage.getViewport().getScreenHeight() - 30);
@@ -54,6 +54,62 @@ public class HudController implements EntityListener {
 
 
         TileActor lFakeButton = new TileActor();
+        lFakeButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                System.out.println("Switched to action Denied");
+                PlayerController.get().setCurrentAction(new PlayerAction() {
+                    // is this weird gross code?
+                    {
+//                        theName = "Conditional Action";
+                        setName("Conditional Denied Action");
+                        //instance initializer
+                        theActionCondition = new ActionCondition() {
+                            @Override
+                            public boolean hasMetCondtion() {
+                                // some test condition.
+                                System.out.println("Dummy Condition has NOT been met! (always NOT met)");
+                                return false;
+                            }
+                        };
+                    }
+
+                    @Override
+                    public ActionTaken execute() {
+                        if (checkCondition()) {
+                            System.out.println("action 1 performed on nothing");
+                            return new ActionTaken(5);
+                        } else {
+                            return null;
+                        }
+                    }
+
+                    @Override
+                    public ActionTaken execute(Monster pMonster) {
+                        if (checkCondition()) {
+                            System.out.println("action 1 performed on monster");
+                            return new ActionTaken(5);
+                        } else {
+                            return null;
+                        }
+                    }
+
+                    @Override
+                    public ActionTaken execute(Player pPlayer) {
+                        if (checkCondition()) {
+                            System.out.println("action 1 performed on player");
+                            return new ActionTaken(5);
+                        } else {
+                            return null;
+                        }
+                    }
+                });
+            }
+        });
+        theStage.addActor(lFakeButton);
+
+        lFakeButton = new TileActor();
+        lFakeButton.setPosition(80, 0);
         lFakeButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -73,9 +129,10 @@ public class HudController implements EntityListener {
                             }
                         };
                     }
+
                     @Override
                     public ActionTaken execute() {
-                        if(checkCondition()) {
+                        if (checkCondition()) {
                             System.out.println("action 1 performed on nothing");
                             return new ActionTaken(5);
                         } else {
@@ -101,8 +158,9 @@ public class HudController implements EntityListener {
         });
         theStage.addActor(lFakeButton);
 
+
         lFakeButton = new TileActor();
-        lFakeButton.setPosition(100, 0);
+        lFakeButton.setPosition(160, 0);
         lFakeButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -132,7 +190,7 @@ public class HudController implements EntityListener {
         theStage.addActor(lFakeButton);
 
         lFakeButton = new TileActor();
-        lFakeButton.setPosition(250, 0);
+        lFakeButton.setPosition(240, 0);
         lFakeButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
