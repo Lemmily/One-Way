@@ -35,9 +35,7 @@ public class EquipmentComponent extends Component {
     }
 
     private boolean hasSlot(String pSlot) {
-        if (theEquipmentSlots.containsKey(pSlot))
-            return true;
-        return false;
+        return theEquipmentSlots.containsKey(pSlot);
     }
 
 

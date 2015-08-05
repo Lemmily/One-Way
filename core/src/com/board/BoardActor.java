@@ -12,8 +12,8 @@ import java.util.LinkedList;
 
 /**
  * Created by emily on 18/05/15.
- *
- *
+ * <p>
+ * <p>
  * board visuals
  */
 public class BoardActor extends Group {
@@ -70,8 +70,9 @@ public class BoardActor extends Group {
     }
 
     /**
-     *  makes the tile visibly drop whilst signalling all tiles to move up a space. once animation completed
-     *  pTile is removed from systems and engines
+     * makes the tile visibly drop whilst signalling all tiles to move up a space. once animation completed
+     * pTile is removed from systems and engines
+     *
      * @param pTile
      */
     public void dropTile(final TileActor pTile) {
@@ -102,10 +103,11 @@ public class BoardActor extends Group {
 
     /**
      * removes and deregisters the occupier from  listening to the signals and removes from the engine.
+     *
      * @param pTile
      */
     private void removeTile(TileActor pTile) {
-        if(pTile.theTile.isOccupied()) {
+        if (pTile.theTile.isOccupied()) {
             PlayerController.get().deregisterListener((Monster) pTile.theTile.getOccupier());
             GameController.get().getEngine().removeEntity(pTile.theTile.getOccupier());
         }
@@ -114,6 +116,7 @@ public class BoardActor extends Group {
 
     /**
      * moves the next tile to the previous tile's location.
+     *
      * @param pPrevious
      * @param pNext
      */
@@ -130,7 +133,6 @@ public class BoardActor extends Group {
     }
 
     /**
-     *
      * @return the board object
      */
     public Board board() {

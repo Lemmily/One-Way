@@ -44,7 +44,7 @@ public class HudController implements EntityListener {
         theTooltip = new Tooltip(pStage.getViewport().getScreenWidth() / 2, 0);
         theStage.addActor(theTooltip);
 
-        theFPS= new Tooltip(0, pStage.getViewport().getScreenHeight() - 30);
+        theFPS = new Tooltip(0, pStage.getViewport().getScreenHeight() - 30);
         theStage.addActor(theFPS);
 
         theStatWin = new StatisticWindowActor("Statistics");
@@ -161,7 +161,7 @@ public class HudController implements EntityListener {
 
         lFakeButton = new TileActor();
         lFakeButton.setPosition(160, 0);
-        lFakeButton.addListener(new ClickListener(){
+        lFakeButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Switched to action 2");

@@ -26,7 +26,7 @@ public class TileActor extends Actor {
         theTexture = Assets.get("images/tiles.atlas", "bg");
         theObjectTexture = Assets.get("images/tiles.atlas", "empty");
 
-        setSize(theTexture.getRegionWidth()*2, theTexture.getRegionHeight()*2);
+        setSize(theTexture.getRegionWidth() * 2, theTexture.getRegionHeight() * 2);
     }
 
     public TileActor(final Tile pTile) {
@@ -34,13 +34,13 @@ public class TileActor extends Actor {
         theTile = pTile;
         pTile.theActor = this;
 
-        if(theTile.isOccupied()) {
+        if (theTile.isOccupied()) {
             setObjectTexture("icons/potions.atlas", theTile.getTexture());
         } else {
             theObjectTexture = Assets.get("images/tiles.atlas", "empty");
         }
 
-        setSize(theTexture.getRegionWidth()*2, theTexture.getRegionHeight()*2);
+        setSize(theTexture.getRegionWidth() * 2, theTexture.getRegionHeight() * 2);
 
         addListener(new ClickListener() {
             @Override
@@ -86,7 +86,7 @@ public class TileActor extends Actor {
     public void draw(Batch pBatch, float parentAlpha) {
         pBatch.setColor(getColor());
         pBatch.draw(getTexture(), getX(), getY(), getWidth(), getHeight());
-        if(theTile.isOccupied()) {
+        if (theTile.isOccupied()) {
             pBatch.draw(getObjectTexture(), getX(), getY(), getWidth(), getHeight());
         }
     }

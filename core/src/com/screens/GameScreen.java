@@ -23,7 +23,7 @@ import java.util.Comparator;
 /**
  * Created by emily on 18/05/15.
  */
-public class GameScreen implements Screen{
+public class GameScreen implements Screen {
     private Board theBoard;
     private BoardActor theBoardActor;
     private Stage theStage;

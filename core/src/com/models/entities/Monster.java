@@ -22,7 +22,7 @@ public class Monster extends GameEntity implements Actable, Interactable, Action
         Random lRandom = new Random();
         theActionPoints = lRandom.nextInt(10);
         add(new EnemyComponent());
-        add(new StatsComponent(5,5,5,5,5,5,5));
+        add(new StatsComponent(5, 5, 5, 5, 5, 5, 5));
     }
 
     public Monster(String pName) {
@@ -33,7 +33,7 @@ public class Monster extends GameEntity implements Actable, Interactable, Action
         Random lRandom = new Random();
         theActionPoints = lRandom.nextInt(10);
         add(new EnemyComponent());
-        add(new StatsComponent(5,5,5,5,5,5,5));
+        add(new StatsComponent(5, 5, 5, 5, 5, 5, 5));
     }
 
     @Override
@@ -43,7 +43,7 @@ public class Monster extends GameEntity implements Actable, Interactable, Action
 
     @Override
     public void doSomething() {
-        System.out.println( "Monster " + theName + " did an action!");
+        System.out.println("Monster " + theName + " did an action!");
         theActionPoints -= 10;
     }
 

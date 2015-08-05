@@ -16,12 +16,14 @@ public abstract class PlayerAction {
 
     /**
      * for performing action on a monster (eg. attack)
+     *
      * @param pMonster
      */
     public abstract ActionTaken execute(Monster pMonster);
 
     /**
      * for performing action on the player (eg. drink potion)
+     *
      * @param pPlayer
      */
     public abstract ActionTaken execute(Player pPlayer);
