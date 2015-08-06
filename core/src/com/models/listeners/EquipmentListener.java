@@ -9,7 +9,7 @@ import com.models.signals.ItemEquipped;
  */
 public interface EquipmentListener extends Listener<ItemEquipped> {
 
-    public void unequipItem(Item pItem);
+    void unequipItem(Item pItem);
 
     void equipItem(Item pItem);
 }
