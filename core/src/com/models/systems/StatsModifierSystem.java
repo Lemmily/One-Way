@@ -22,7 +22,5 @@ public class StatsModifierSystem extends IteratingSystem {
         StatsComponent lStatsComponent = pEntity.getComponent(StatsComponent.class);
 //        ModifiedComponent lModifiedComponent = pEntity.getComponent(ModifiedComponent.class);
         //check for oot modifiers.
-
     }
-
 }

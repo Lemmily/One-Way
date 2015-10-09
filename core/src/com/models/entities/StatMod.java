@@ -12,8 +12,17 @@ import com.utils.Enums;
 public class StatMod implements ActionListener {
 
 
+    /**
+     * which stat is it modifying?
+     */
     private Enums.Attributes theType;
+    /**
+     * turns ~~~ action points.
+     */
     private int theTurnsActive;
+    /**
+     * how much is the stat modified?
+     */
     private int theValue;
 
     public StatMod(Enums.Attributes pType, int pModifier, int pTurnsActive) {
@@ -33,7 +42,7 @@ public class StatMod implements ActionListener {
         }
 
         if (theTurnsActive <= 0) {
-            //diiiieeee
+            //diiiieeee modifier dieeee.
             PlayerController.get().deregisterListener(this);
         }
     }

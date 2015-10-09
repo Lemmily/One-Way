@@ -25,7 +25,7 @@ public class StatsComponent extends Component{
 
 
     private final ArrayMap<Enums.Attributes, Array<StatMod>> theModifiers = new ArrayMap<>();
-    private final Array<StatMod> theRemovableModifiers = new Array<>();
+//    private Array<StatMod> theRemovableModifiers = new Array<>();
 
     public StatsComponent(Attribute pStrength, Attribute pDexterity, Attribute pIntelligence, Attribute pConstitution, Attribute pCharisma, Attribute pWisdom, Attribute pLuck) {
         theStrength = pStrength;
@@ -48,7 +48,7 @@ public class StatsComponent extends Component{
     }
 
 
-    public Attribute get(Enums.Attributes pType) {
+    public Attribute getValue(Enums.Attributes pType) {
         switch(pType) {
             case Strength:
                 return theStrength;
@@ -69,22 +69,22 @@ public class StatsComponent extends Component{
         }
     }
 
-    public int getTotal(Enums.Attributes pType) {
+    public int getTotalModified(Enums.Attributes pType) {
         switch (pType) {
             case Strength:
-                return theStrength.getValue() + tallyModifiers(pType);
+                return theStrength.getModifier() + tallyModifiers(pType);
             case Dexterity:
-                return theDexterity.getValue() + tallyModifiers(pType);
+                return theDexterity.getModifier() + tallyModifiers(pType);
             case Constitution:
-                return theConstitution.getValue() + tallyModifiers(pType);
+                return theConstitution.getModifier() + tallyModifiers(pType);
             case Intelligence:
-                return theIntelligence.getValue() + tallyModifiers(pType);
+                return theIntelligence.getModifier() + tallyModifiers(pType);
             case Charisma:
-                return theCharisma.getValue() + tallyModifiers(pType);
+                return theCharisma.getModifier() + tallyModifiers(pType);
             case Wisdom:
-                return theWisdom.getValue() + tallyModifiers(pType);
+                return theWisdom.getModifier() + tallyModifiers(pType);
             case Luck:
-                return theLuck.getValue() + tallyModifiers(pType);
+                return theLuck.getModifier() + tallyModifiers(pType);
             default:
                 return 0;
         }
@@ -101,18 +101,18 @@ public class StatsComponent extends Component{
 
     public int tallyModifiers(Enums.Attributes pType) {
         int lMod = 0;
-
+        Array<StatMod> lRemovableModifiers = new Array<>();
         for (int i = 0; i < theModifiers.get(pType).size; i++) {
             if (theModifiers.get(pType).get(i).getTurnsLeft() > 0) {
                 lMod += theModifiers.get(pType).get(i).getValue();
             } else {
-                theRemovableModifiers.add(theModifiers.get(pType).get(i));
+                lRemovableModifiers.add(theModifiers.get(pType).get(i));
             }
         }
 
         //Todo: think of a better solution for removing dead modifiers.
-        for (int i = 0; i < theRemovableModifiers.size; i++) {
-            theModifiers.get(pType).removeValue(theRemovableModifiers.get(i), true);
+        for (int i = 0; i < lRemovableModifiers.size; i++) {
+            theModifiers.get(pType).removeValue(lRemovableModifiers.get(i), true);
         }
 
         return lMod;

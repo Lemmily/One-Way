@@ -1,7 +1,6 @@
 package com.screens;
 
 import com.badlogic.ashley.core.Engine;
-import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
@@ -17,8 +16,6 @@ import com.models.components.Components;
 import com.models.components.StatsComponent;
 import com.models.systems.ActionSystem;
 import com.utils.Enums;
-
-import java.util.Comparator;
 
 /**
  * Created by emily on 18/05/15.
@@ -51,18 +48,15 @@ public class GameScreen implements Screen {
         theHudStage.setDebugAll(true);
 
         //make family (entities that have a certain set of components)
-        theEngine.addSystem(new ActionSystem(new Comparator<Entity>() {
-            @Override
+        theEngine.addSystem(new ActionSystem((pEntity_1, pEntity_2) -> {
             /**
              * sorts into descending order of dexterity
              * TODO: extract initiative? for turns.
              */
-            public int compare(Entity pEntity_1, Entity pEntity_2) {
-                StatsComponent lStat_1 = Components.STATS.get(pEntity_1);
-                StatsComponent lStat_2 = Components.STATS.get(pEntity_2);
+            StatsComponent lStat_1 = Components.STATS.get(pEntity_1);
+            StatsComponent lStat_2 = Components.STATS.get(pEntity_2);
 
-                return lStat_2.get(Enums.Attributes.Dexterity).getValue() - lStat_1.get(Enums.Attributes.Dexterity).getValue();
-            }
+            return lStat_2.getValue(Enums.Attributes.Dexterity).getValue() - lStat_1.getValue(Enums.Attributes.Dexterity).getValue();
         }));
     }
 

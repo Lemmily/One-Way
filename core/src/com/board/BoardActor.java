@@ -79,7 +79,7 @@ public class BoardActor extends Group {
 
         if (!theAnimating) {
             //move tile out
-            pTile.addAction(Actions.sequence(Actions.parallel(Actions.moveTo(pTile.getX(), pTile.getY() - 128, 0.65f), Actions.fadeOut(0.65f)), Actions.run(new Runnable() {
+            pTile.addAction(Actions.sequence(Actions.parallel(Actions.moveTo(pTile.getX(), pTile.getY() - 128, 0.80f), Actions.fadeOut(0.85f)), Actions.run(new Runnable() {
                 @Override
                 public void run() {
                     removeTile(pTile);
