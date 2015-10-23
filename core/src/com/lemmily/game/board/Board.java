@@ -3,6 +3,7 @@ package com.lemmily.game.board;
 
 import com.lemmily.game.models.entities.Monster;
 
+import java.util.LinkedList;
 import java.util.Stack;
 
 /**
@@ -12,19 +13,20 @@ import java.util.Stack;
  * board logic
  */
 public class Board {
-    public Stack<Tile> theTiles = new Stack<>();
+    public LinkedList<Tile> theTiles = new LinkedList<>();
     private int theSize;
 
     public Board(int pSize) {
         theSize = pSize;
 
         for (int i = 0; i < pSize; i++) {
-            theTiles.push(new Tile(i));
+            theTiles.add(new Tile(i));
         }
     }
 
     public void addTile(Tile pTile) {
         theTiles.push(pTile);
+        pTile.thePos = theTiles.indexOf(pTile);
     }
 
     public Tile findTileWithMonster(Monster pMonster) {
@@ -36,6 +38,6 @@ public class Board {
     }
 
     public void disposeTile(Tile pTile) {
-
+        theTiles.remove(pTile);
     }
 }

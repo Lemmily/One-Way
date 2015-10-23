@@ -43,7 +43,7 @@ public class TileActor extends Actor {
         addListener(new ClickListener() {
             @Override
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                System.out.println("enter " + pTile.thePos);
+                System.out.println("enter " + pTile.thePos + "x: " + pTile.theActor.getX() + " w:" + pTile.theActor.getWidth());
             }
 
             @Override
@@ -89,4 +89,13 @@ public class TileActor extends Actor {
         }
     }
 
+
+    @Override
+    public String toString() {
+        String lString = "";
+
+        lString += "x:" + this.getX() + "y:" + this.getY() + " (" + theTile + ")";
+
+        return lString;
+    }
 }

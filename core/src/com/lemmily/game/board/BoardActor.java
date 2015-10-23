@@ -1,12 +1,14 @@
 package com.lemmily.game.board;
 
 import com.badlogic.ashley.core.Engine;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.lemmily.game.models.GameController;
 import com.lemmily.game.models.PlayerController;
 import com.lemmily.game.models.entities.Monster;
 import com.lemmily.game.models.entities.Player;
+import com.lemmily.game.models.signals.TileDropped;
 
 import java.util.LinkedList;
 
@@ -18,6 +20,7 @@ import java.util.LinkedList;
  */
 public class BoardActor extends Group {
 
+    private static final float TILE_WIDTH = 64.0f;
     private Board theBoard;
 
     private LinkedList<TileActor> theTiles;
@@ -33,13 +36,13 @@ public class BoardActor extends Group {
 //        TextButton buttonPlay = new TextButton("HEllow", Assets.menuSkin);
 //        addActor(buttonPlay);
         for (int i = 0; i < pBoard.theTiles.size(); i++) {
-            TileActor lTile = new TileActor(pBoard.theTiles.get(i));
-            lTile.setPosition(lTile.getWidth() + 10 + i * (lTile.getWidth()), 0);
-            theTiles.add(lTile);
-            this.addActor(lTile);
+            TileActor lTileActor = new TileActor(pBoard.theTiles.get(i));
+            lTileActor.setPosition(lTileActor.getWidth() + 10 + i * (lTileActor.getWidth()), 0);
+            theTiles.add(lTileActor);
+            addActor(lTileActor);
         }
         registerListeners();
-        addToEngine(pEngine);
+        addAllToEngine(pEngine);
 //        this.setTouchable(Touchable.childrenOnly);
 
 //        splashImage.addAction(Actions.sequence(Actions.alpha(0)
@@ -51,10 +54,16 @@ public class BoardActor extends Group {
 //        })));
     }
 
-    private void addToEngine(Engine pEngine) {
+    private void addAllToEngine(Engine pEngine) {
         for (TileActor lTileActor : theTiles) {
             if (lTileActor.theTile.isOccupied())
                 pEngine.addEntity(lTileActor.theTile.getOccupier());
+        }
+    }
+
+    private void addToEngine(TileActor pTileActor) {
+        if (pTileActor.theTile.isOccupied()) {
+            GameController.get().getEngine().addEntity(pTileActor.theTile.getOccupier());
         }
     }
 
@@ -66,7 +75,9 @@ public class BoardActor extends Group {
     }
 
     public void dropFirstTile() {
-        dropTile(theTiles.peekFirst());
+        if (!theAnimating) {
+            dropTile(theTiles.peekFirst());
+        }
     }
 
     /**
@@ -102,7 +113,7 @@ public class BoardActor extends Group {
             TileActor lPrevious = pTile;
             for (int i = lIndex; i <= theTiles.size() - 1; i++) {
                 TileActor lActor = theTiles.get(i);
-                moveUp(lPrevious, lActor);
+                moveUp(lActor);
                 lActor.theTile.thePos -= 1;
                 lPrevious = lActor;
                 theAnimating = true;
@@ -119,33 +130,57 @@ public class BoardActor extends Group {
         if (pTile.theTile.isOccupied()) {
             PlayerController.get().deregisterListener((Monster) pTile.theTile.getOccupier());
             GameController.get().getEngine().removeEntity(pTile.theTile.getOccupier());
+            theBoard.disposeTile(pTile.theTile);
         }
         pTile.remove();
+        GameController.theTileDroppedSignal.dispatch(new TileDropped());
     }
 
     /**
      * moves the next tile to the previous tile's location.
      *
-     * @param pPrevious
+//     * @param pPrevious
      * @param pNext
      */
-    private void moveUp(TileActor pPrevious, final TileActor pNext) {
+    private void moveUp(final TileActor pNext) {
+        theAnimating = true;
         pNext.addAction(Actions.sequence(
-                Actions.moveTo(pPrevious.getX(), pPrevious.getY(), 1.0f),
-                Actions.run(new Runnable() {
-                    @Override
-                    public void run() {
-                        System.out.println("Moving the tile up" + pNext.theTile.thePos);
-                        theAnimating = false;
-                    }
+                Actions.moveTo(pNext.getX() - TILE_WIDTH, pNext.getY(), 1.0f),
+                Actions.run(() -> {
+                    System.out.println("Moving the tile up" + pNext.theTile.thePos);
+                    theAnimating = false;
                 })));
     }
+
+    private void moveToEnd( TileActor pNext) {
+        theAnimating = true;
+        pNext.addAction(Actions.sequence(
+                //TODO: change hardcoded nessssss for the last position!
+                Actions.moveTo(522.0f, 0, 1.0f),
+                Actions.run(() -> {
+                    System.out.println("Moving the tile up" + pNext.theTile.thePos);
+                    theAnimating = false;
+                })));
+    }
+
 
     /**
      * @return the board object
      */
     public Board board() {
         return theBoard;
+    }
+
+    public void addNewTile() {
+        TileActor lTileActor = new TileActor(new Tile(theTiles.size()));//theTiles.size()));
+        addActor(lTileActor);
+        lTileActor.setPosition(Gdx.graphics.getWidth(), 0);
+        System.out.println(lTileActor);
+//        lTileActor.setPosition(Gdx.graphics.getWidth(), this.getY());
+        addToEngine(lTileActor);
+        moveToEnd(lTileActor);
+        theTiles.add(lTileActor);
+        theBoard.addTile(lTileActor.theTile);
     }
 
 }

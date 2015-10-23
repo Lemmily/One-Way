@@ -195,7 +195,6 @@ public class HudController implements EntityListener {
                     public ActionTaken execute(Monster pMonster) {
                         Tile lTile = GameController.get().getBoardActor().board().findTileWithMonster(pMonster);
                         GameController.get().getBoardActor().dropTile(lTile.theActor);
-
                         return new ActionTaken(0);
                     }
 
