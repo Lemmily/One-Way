@@ -112,9 +112,10 @@ public class BoardActor extends Group {
             //move all subsequent tiles up
             TileActor lPrevious = pTile;
             for (int i = lIndex; i <= theTiles.size() - 1; i++) {
+                theAnimating = true;
                 TileActor lActor = theTiles.get(i);
-                moveUp(lActor);
                 lActor.theTile.thePos -= 1;
+                moveUp(lActor);
                 lPrevious = lActor;
                 theAnimating = true;
             }
@@ -145,7 +146,7 @@ public class BoardActor extends Group {
     private void moveUp(final TileActor pNext) {
         theAnimating = true;
         pNext.addAction(Actions.sequence(
-                Actions.moveTo(pNext.getX() - TILE_WIDTH, pNext.getY(), 1.0f),
+                Actions.moveTo(TILE_WIDTH + 10 + theTiles.indexOf(pNext) * TILE_WIDTH, pNext.getY(), 1.0f),
                 Actions.run(() -> {
                     System.out.println("Moving the tile up" + pNext.theTile.thePos);
                     theAnimating = false;
