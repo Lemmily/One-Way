@@ -25,7 +25,7 @@ public class Board {
     }
 
     public void addTile(Tile pTile) {
-        theTiles.push(pTile);
+        theTiles.add(pTile);
         pTile.thePos = theTiles.indexOf(pTile);
     }
 
