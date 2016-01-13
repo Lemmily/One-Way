@@ -108,6 +108,7 @@ public class BoardActor extends Group {
 
             int lIndex = theTiles.indexOf(pTile);
             theTiles.remove(pTile);
+            theBoard.disposeTile(pTile.theTile);
 
             //move all subsequent tiles up
             TileActor lPrevious = pTile;
@@ -153,16 +154,16 @@ public class BoardActor extends Group {
                 })));
     }
 
-    private void moveToEnd( TileActor pNext) {
-        theAnimating = true;
-        pNext.addAction(Actions.sequence(
-                //TODO: change hardcoded nessssss for the last position!
-                Actions.moveTo(522.0f, 0, 1.0f),
-                Actions.run(() -> {
-                    System.out.println("Moving the tile up" + pNext.theTile.thePos);
-                    theAnimating = false;
-                })));
-    }
+//    private void moveToEnd( TileActor pNext) {
+//        theAnimating = true;
+//        pNext.addAction(Actions.sequence(
+//                //TODO: change hardcoded nessssss for the last position!
+//                Actions.moveTo(522.0f, 0, 1.0f),
+//                Actions.run(() -> {
+//                    System.out.println("Moving the tile up" + pNext.theTile.thePos);
+//                    theAnimating = false;
+//                })));
+//    }
 
 
     /**
@@ -177,11 +178,10 @@ public class BoardActor extends Group {
         addActor(lTileActor);
         lTileActor.setPosition(Gdx.graphics.getWidth(), 0);
         System.out.println(lTileActor);
-//        lTileActor.setPosition(Gdx.graphics.getWidth(), this.getY());
         addToEngine(lTileActor);
-        moveToEnd(lTileActor);
         theTiles.add(lTileActor);
         theBoard.addTile(lTileActor.theTile);
+        moveUp(lTileActor);
     }
 
 }
