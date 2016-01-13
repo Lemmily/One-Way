@@ -51,7 +51,3 @@ project(":core") {
         compile "com.badlogicgames.ashley:ashley:$ashleyVersion"
     }
 }
-
-tasks.eclipse.doLast {
-    delete ".project"
-}

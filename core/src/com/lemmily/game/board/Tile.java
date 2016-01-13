@@ -18,7 +18,7 @@ public class Tile {
         thePos = pPos;
         Random lRandom = new Random();
         if (lRandom.nextInt(100) < 50) {
-            theOccupier = new Monster("");// + pPos);
+            theOccupier = new Monster("" + pPos);
             System.out.println(theOccupier);
 
             ///// moved so that the gamecontroller can make the board actor.

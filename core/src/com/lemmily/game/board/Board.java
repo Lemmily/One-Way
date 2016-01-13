@@ -26,7 +26,7 @@ public class Board {
 
     public void addTile(Tile pTile) {
         theTiles.add(pTile);
-        pTile.thePos = theTiles.indexOf(pTile);
+//        pTile.thePos = theTiles.indexOf(pTile);
     }
 
     public Tile findTileWithMonster(Monster pMonster) {

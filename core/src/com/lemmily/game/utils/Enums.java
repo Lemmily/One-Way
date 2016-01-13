@@ -5,7 +5,7 @@ package com.lemmily.game.utils;
  */
 public class Enums {
 
-    public static enum Attributes {
+    public enum Attributes {
         Strength,
         Dexterity,
         Constitution,
