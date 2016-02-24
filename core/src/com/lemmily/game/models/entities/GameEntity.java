@@ -2,16 +2,13 @@ package com.lemmily.game.models.entities;
 
 import com.badlogic.ashley.core.Entity;
 
-/**
- * Created by emily on 19/05/15.
- */
 public abstract class GameEntity extends Entity {
 
 
     public String theTexture;
 
     public GameEntity() {
-
+        theTexture = "empty";
     }
 
     public GameEntity(String image) {

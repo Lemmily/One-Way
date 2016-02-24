@@ -9,11 +9,11 @@ public interface Actable {
     /**
      * @return whether the entity can perform an action with current action points.
      */
-    public boolean canPerformAction();
+    boolean canPerformAction();
 
 
     /**
      * temp to test system.
      */
-    public void doSomething();
+    void doSomething();
 }

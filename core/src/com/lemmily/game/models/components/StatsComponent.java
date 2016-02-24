@@ -8,13 +8,11 @@ import com.lemmily.game.models.entities.StatMod;
 import com.lemmily.game.utils.Enums;
 
 /**
- * Created by emily on 19/05/15.
+ *  A container for holding the stats data. Including modifiers to these stats..
  */
 public class StatsComponent implements Component {
     private final ArrayMap<Enums.Attributes, Array<StatMod>> theModifiers = new ArrayMap<>();
-    /**
-     * container for holding the stats data
-     */
+
 
     private Attribute theStrength;
     private Attribute theDexterity;
@@ -70,19 +68,19 @@ public class StatsComponent implements Component {
     public int getTotalModified(Enums.Attributes pType) {
         switch (pType) {
             case Strength:
-                return theStrength.getModifier() + tallyModifiers(pType);
+                return theStrength.getModifier() + tallyAndGetModifiers(pType);
             case Dexterity:
-                return theDexterity.getModifier() + tallyModifiers(pType);
+                return theDexterity.getModifier() + tallyAndGetModifiers(pType);
             case Constitution:
-                return theConstitution.getModifier() + tallyModifiers(pType);
+                return theConstitution.getModifier() + tallyAndGetModifiers(pType);
             case Intelligence:
-                return theIntelligence.getModifier() + tallyModifiers(pType);
+                return theIntelligence.getModifier() + tallyAndGetModifiers(pType);
             case Charisma:
-                return theCharisma.getModifier() + tallyModifiers(pType);
+                return theCharisma.getModifier() + tallyAndGetModifiers(pType);
             case Wisdom:
-                return theWisdom.getModifier() + tallyModifiers(pType);
+                return theWisdom.getModifier() + tallyAndGetModifiers(pType);
             case Luck:
-                return theLuck.getModifier() + tallyModifiers(pType);
+                return theLuck.getModifier() + tallyAndGetModifiers(pType);
             default:
                 return 0;
         }
@@ -97,13 +95,17 @@ public class StatsComponent implements Component {
     }
 
 
-    public int tallyModifiers(Enums.Attributes pType) {
+    public int tallyAndGetModifiers( Enums.Attributes pType) {
         int lMod = 0;
         Array<StatMod> lRemovableModifiers = new Array<>();
         for (int i = 0; i < theModifiers.get(pType).size; i++) {
-            if (theModifiers.get(pType).get(i).getTurnsLeft() > 0) {
+            if (theModifiers.get(pType).get(i).getTurnsLeft() == -1) {
+                continue; //permanent modifier. (or until it gets explicitly removed.)
+            }
+            else if (theModifiers.get(pType).get(i).getTurnsLeft() > 0) {
                 lMod += theModifiers.get(pType).get(i).getValue();
-            } else {
+            }
+            else {
                 lRemovableModifiers.add(theModifiers.get(pType).get(i));
             }
         }

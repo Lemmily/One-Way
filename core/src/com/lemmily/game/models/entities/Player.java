@@ -3,22 +3,19 @@ package com.lemmily.game.models.entities;
 import com.badlogic.ashley.signals.Signal;
 import com.badlogic.gdx.utils.Array;
 import com.lemmily.game.models.components.Components;
-import com.lemmily.game.models.components.EquipmentComponent;
+import com.lemmily.game.models.components.EquipmentSlotComponent;
 import com.lemmily.game.models.components.PlayerComponent;
 import com.lemmily.game.models.components.StatsComponent;
 import com.lemmily.game.models.listeners.EquipmentListener;
 import com.lemmily.game.models.signals.InventoryItemAdded;
 import com.lemmily.game.models.signals.ItemEquipped;
 
-/**
- * Created by emily on 20/05/15.
- */
 public class Player extends GameEntity implements EquipmentListener {
 
 
     public Player() {
         super("potion_health_large");
-        add(new StatsComponent(1, 1, 1, 1, 1, 1, 1));
+        add(new StatsComponent(5, 5, 5, 5, 5, 5, 5));
         add(new PlayerComponent());
         Array<String> lSlots = new Array<>();
         lSlots.add("Torso");
@@ -33,7 +30,7 @@ public class Player extends GameEntity implements EquipmentListener {
 
         Signal<ItemEquipped> lEquippedSignal = new Signal<>();
         Signal<InventoryItemAdded> lInventorySignal = new Signal<>();
-        add(new EquipmentComponent(lSlots, lEquippedSignal, lInventorySignal));
+        add(new EquipmentSlotComponent(lSlots, lEquippedSignal, lInventorySignal));
         lEquippedSignal.add(this);
     }
 
@@ -45,16 +42,18 @@ public class Player extends GameEntity implements EquipmentListener {
 
 
     @Override
-    public void unequipItem(Item pItem) {
-
+    public boolean unequipItem(Item pItem) {
+        pItem = Components.EQUIPMENT.get(this).unequipItem(pItem);
+        return pItem == null;
     }
 
     @Override
-    public void equipItem(Item pItem) {
+    public boolean equipItem(Item pItem) {
         boolean lsuccess = Components.EQUIPMENT.get(this).equipItem(pItem);
-        if (lsuccess) {
-
-        }
+//        if (lsuccess) {
+//
+//        }
+        return lsuccess;
     }
 
     @Override
@@ -65,4 +64,5 @@ public class Player extends GameEntity implements EquipmentListener {
             //update the stats.
         }
     }
+
 }

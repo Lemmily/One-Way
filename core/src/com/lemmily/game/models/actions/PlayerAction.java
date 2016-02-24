@@ -40,7 +40,7 @@ public abstract class PlayerAction {
      * @return true when either the action has NO condition, or the condition has been met.
      */
     public boolean checkCondition() {
-        return theActionCondition == null || theActionCondition.hasMetCondtion();
+        return theActionCondition == null || theActionCondition.hasMetCondition();
     }
 
     public String getName() {

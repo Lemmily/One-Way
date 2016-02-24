@@ -13,8 +13,10 @@ import com.lemmily.game.utils.Assets;
  * Created by emily on 18/05/15.
  */
 public class TileActor extends Actor {
+    private static TextureRegion theMultipleObjectTexture = Assets.get( "images/tiles.atlas", "empty");
     public Tile theTile;
     private TextureRegion theTexture;
+    private TextureRegion theEntityTexture;
     private TextureRegion theObjectTexture;
     private Label theLabel;
 
@@ -22,20 +24,22 @@ public class TileActor extends Actor {
         theTile = new Tile(4, null); //empty tile
 
         theTexture = Assets.get("images/tiles.atlas", "bg");
+        theEntityTexture = Assets.get("images/tiles.atlas", "empty");
         theObjectTexture = Assets.get("images/tiles.atlas", "empty");
-
         setSize(theTexture.getRegionWidth() * 2, theTexture.getRegionHeight() * 2);
     }
 
     public TileActor(final Tile pTile) {
         theTexture = Assets.get("images/tiles.atlas", "bg");
+        //TODO: take these kind of direct links and give them to a manager/controller
+        //TODO: keep the links in a map or something like that.
         theTile = pTile;
         pTile.theActor = this;
 
         if (theTile.isOccupied()) {
-            setObjectTexture("icons/potions.atlas", theTile.getTexture());
+            setObjectTexture("images/tiles.atlas", theTile.getTexture());
         } else {
-            theObjectTexture = Assets.get("images/tiles.atlas", "empty");
+            theEntityTexture = Assets.get("images/tiles.atlas", "empty");
         }
 
         setSize(theTexture.getRegionWidth() * 2, theTexture.getRegionHeight() * 2);
@@ -43,7 +47,7 @@ public class TileActor extends Actor {
         addListener(new ClickListener() {
             @Override
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                System.out.println("enter " + pTile.thePos + "x: " + pTile.theActor.getX() + " w:" + pTile.theActor.getWidth());
+                System.out.println("enter " + pTile.thePos + " x:" + pTile.theActor.getX() + ", w:" + pTile.theActor.getWidth());
             }
 
             @Override
@@ -68,27 +72,51 @@ public class TileActor extends Actor {
         return theTexture;
     }
 
-    public TextureRegion getObjectTexture() {
+    public TextureRegion getEntityTexture() {
+        if (theEntityTexture != null)
+            return theEntityTexture;
+
+        return Assets.get("images/tiles.atlas", "empty");
+    }
+
+    public TextureRegion getObjectTexture()
+    {
         return theObjectTexture;
     }
 
-    public void setObjectTexture(TextureRegion pObjectTexture) {
-        theObjectTexture = pObjectTexture;
+    public static TextureRegion getMultipleObjectTexture()
+    {
+        return theMultipleObjectTexture;
+    }
+
+    public void setEntityTexture( TextureRegion pEntityTexture ) {
+        theEntityTexture = pEntityTexture;
     }
 
     public void setObjectTexture(String pAtlas, String pRegion) {
-        theObjectTexture = Assets.get(pAtlas, pRegion);
+        theEntityTexture = Assets.get(pAtlas, pRegion);
     }
+
 
     @Override
-    public void draw(Batch pBatch, float parentAlpha) {
-        pBatch.setColor(getColor());
-        pBatch.draw(getTexture(), getX(), getY(), getWidth(), getHeight());
-        if (theTile.isOccupied()) {
-            pBatch.draw(getObjectTexture(), getX(), getY(), getWidth(), getHeight());
+    public void draw( Batch pBatch, float parentAlpha )
+    {
+        pBatch.setColor( getColor() );
+        pBatch.draw( getTexture(), getX(), getY(), getWidth(), getHeight() );
+        if( theTile.isOccupied() )
+        {
+            pBatch.draw( getEntityTexture(), getX(), getY(), getWidth(), getHeight() );
+        }
+        if( theTile.hasItems() > 1)
+        {
+            //TODO: texture order? is this considered?
+            pBatch.draw( getObjectTexture(), getX(), getY(), getWidth(), getHeight() );
+        }
+        else if (theTile.hasItems() > 0) {
+            //TODO: multiple items image.
+            pBatch.draw( getObjectTexture(), getX(), getY(), getWidth(), getHeight() );
         }
     }
-
 
     @Override
     public String toString() {

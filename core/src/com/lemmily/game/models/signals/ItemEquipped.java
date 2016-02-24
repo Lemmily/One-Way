@@ -3,7 +3,7 @@ package com.lemmily.game.models.signals;
 import com.lemmily.game.models.entities.Item;
 
 /**
- * Created by emily on 22/07/15.
+ * signal that is fired when
  */
 public class ItemEquipped {
 

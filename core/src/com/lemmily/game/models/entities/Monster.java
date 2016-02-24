@@ -18,7 +18,7 @@ public class Monster extends GameEntity implements Actable, Interactable, Action
     private String theName;
 
     public Monster() {
-        super("potion_health_small");
+        super("goblin");
         Random lRandom = new Random();
         theActionPoints = lRandom.nextInt(10);
         add(new EnemyComponent());
@@ -26,7 +26,7 @@ public class Monster extends GameEntity implements Actable, Interactable, Action
     }
 
     public Monster(String pName) {
-        super("potion_health_small");
+        super("goblin");
 
         theName = pName;
 

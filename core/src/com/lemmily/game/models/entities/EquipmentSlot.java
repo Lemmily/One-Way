@@ -13,7 +13,7 @@ public class EquipmentSlot {
     private String theSlot;
     private Signal<ItemEquipped> theEquippedSignal;
     private Signal<InventoryItemAdded> theInventoryItemAddedSignal;
-    private Item theItem;
+    public Item theItem;
 
     public EquipmentSlot(String pSlot, Signal<ItemEquipped> pEquippedSignal, Signal<InventoryItemAdded> pInventoryItemAddedSignal) {
 
@@ -46,9 +46,18 @@ public class EquipmentSlot {
 
     /**
      * @return true if the slot has something equipped.
+     * @param pItem Item that we want to know if it's equipped.
      */
-    public boolean hasItemEquipped() {
-        return theItem == null;
+    public boolean hasItemEquipped( Item pItem )
+    {
+        return theItem != null && theItem == pItem;
+    }
+
+    /**
+     * @return true if the slot has something equipped.
+     */
+    public boolean hasItemEquipped( ) {
+        return hasItemEquipped( null );
     }
 
 

@@ -17,6 +17,7 @@ public class GameController implements TileDroppedListener {
     private static GameController INSTANCE = null;
 
     public static final Signal<TileDropped> theTileDroppedSignal = new Signal<>();
+//    public static final Signal<ItemDropped> theItemDroppedSignal = new Signal<>();
     private Engine theEngine;
     private BoardActor theBoardActor;
     private Player thePlayer;
@@ -24,7 +25,7 @@ public class GameController implements TileDroppedListener {
     /**
      * singleton thing
      *
-     * @param pEngine
+     * @param pEngine - the Ashley Engine thing.
      */
     public GameController(Engine pEngine) {
         theEngine = pEngine;

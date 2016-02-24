@@ -5,7 +5,7 @@ package com.lemmily.game.models.actions;
  */
 public interface ActionCondition {
 
-    boolean hasMetCondtion();
+    boolean hasMetCondition();
 
 
 }
