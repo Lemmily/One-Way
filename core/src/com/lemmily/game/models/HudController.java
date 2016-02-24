@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.lemmily.game.board.InventoryWindowActor;
 import com.lemmily.game.board.StatisticWindowActor;
 import com.lemmily.game.board.Tile;
 import com.lemmily.game.board.TileActor;
@@ -23,7 +24,8 @@ public class HudController implements EntityListener {
 
     private static HudController INSTANCE;
     private final Stage theStage;
-    private StatisticWindowActor theStatWin;
+	private InventoryWindowActor theInvWin;
+	private StatisticWindowActor theStatWin;
     private Tooltip theTooltip;
     private Tooltip theFPS;
 
@@ -41,6 +43,10 @@ public class HudController implements EntityListener {
         theStatWin.setLabel("hahahahahahahah \n ahahahah ");
         theStatWin.setPosition(Gdx.graphics.getWidth() - theStatWin.getWidth(), Gdx.graphics.getHeight() - theStatWin.getHeight());
 
+        theInvWin = new InventoryWindowActor("Inventory");
+        theStage.addActor(theInvWin);
+		theInvWin.setPosition(Gdx.graphics.getWidth() - theStatWin.getWidth(), 0);
+
 
         TileActor lFakeButton = new TileActor();
         lFakeButton.addListener(new ClickListener() {
@@ -55,7 +61,7 @@ public class HudController implements EntityListener {
                         //instance initializer
                         theActionCondition = new ActionCondition() {
                             @Override
-                            public boolean hasMetCondtion() {
+                            public boolean hasMetCondition() {
                                 // some test condition.
                                 System.out.println("Dummy Condition has NOT been met! (always NOT met)");
                                 return false;
@@ -111,14 +117,13 @@ public class HudController implements EntityListener {
                         //instance initializer
                         theActionCondition = new ActionCondition() {
                             @Override
-                            public boolean hasMetCondtion() {
+                            public boolean hasMetCondition() {
                                 // some test condition.
                                 System.out.println("Dummy Condition has been met! (always met)");
                                 return true;
                             }
                         };
                     }
-
                     @Override
                     public ActionTaken execute() {
                         if (checkCondition()) {

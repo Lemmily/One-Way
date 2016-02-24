@@ -6,8 +6,8 @@ package com.lemmily.game.models.entities;
 public class Item extends GameEntity {
     private String theEquipableSlot;
 
-    public Item() {
-
+    public Item(String pEquipableSlot) {
+        theEquipableSlot = pEquipableSlot;
     }
 
     /**

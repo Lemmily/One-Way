@@ -18,7 +18,7 @@ public class Player extends GameEntity implements EquipmentListener {
 
     public Player() {
         super("potion_health_large");
-        add(new StatsComponent(1, 1, 1, 1, 1, 1, 1));
+        add(new StatsComponent(5, 5, 5, 5, 5, 5, 5));
         add(new PlayerComponent());
         Array<String> lSlots = new Array<>();
         lSlots.add("Torso");
@@ -45,16 +45,17 @@ public class Player extends GameEntity implements EquipmentListener {
 
 
     @Override
-    public void unequipItem(Item pItem) {
-
+    public boolean unequipItem(Item pItem) {
+        return Components.EQUIPMENT.get(this).unequipItem(pItem);
     }
 
     @Override
-    public void equipItem(Item pItem) {
+    public boolean equipItem(Item pItem) {
         boolean lsuccess = Components.EQUIPMENT.get(this).equipItem(pItem);
-        if (lsuccess) {
-
-        }
+//        if (lsuccess) {
+//
+//        }
+        return lsuccess;
     }
 
     @Override
@@ -65,4 +66,5 @@ public class Player extends GameEntity implements EquipmentListener {
             //update the stats.
         }
     }
+
 }

@@ -9,7 +9,7 @@ import com.lemmily.game.models.signals.ItemEquipped;
  */
 public interface EquipmentListener extends Listener<ItemEquipped> {
 
-    void unequipItem(Item pItem);
+    boolean unequipItem(Item pItem);
 
-    void equipItem(Item pItem);
+    boolean equipItem(Item pItem);
 }

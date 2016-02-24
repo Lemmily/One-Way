@@ -9,12 +9,10 @@ import com.lemmily.game.models.entities.Item;
 import com.lemmily.game.models.signals.InventoryItemAdded;
 import com.lemmily.game.models.signals.ItemEquipped;
 
-/**
- * Created by emily on 05/06/15.
- */
 public class EquipmentComponent implements Component {
     private final Array<EquipmentSlot> theEquipmentSlotsTwo;
     private ArrayMap<String, Item> theEquipmentSlots;
+    private ArrayMap<String, Item> theItems;
 
 
     /**
@@ -28,6 +26,8 @@ public class EquipmentComponent implements Component {
             theEquipmentSlots.put(pEquipSlots.get(i), null);
             theEquipmentSlotsTwo.add(new EquipmentSlot(pEquipSlots.get(i), pEquipSignal, pInventorySignal));
         }
+
+        theItems = new ArrayMap<>(  );
     }
 
 
@@ -35,13 +35,20 @@ public class EquipmentComponent implements Component {
         if (hasSlot(pItem.equippableSlot())) {
             System.out.println("hi");
             //find slot and equip
+            return true;
         }
         return false;
+    }
+
+    public boolean unequipItem( Item pItem )
+    {
+        return false; //not successful.
     }
 
     private boolean hasSlot(String pSlot) {
         return theEquipmentSlots.containsKey(pSlot);
     }
+
 
 
 }

@@ -17,7 +17,7 @@ public class StatMod implements ActionListener {
      */
     private Enums.Attributes theType;
     /**
-     * turns ~~~ action points.
+     * turns == action points. How many turns should the modifier be active? -1 permenant.
      */
     private int theTurnsActive;
     /**

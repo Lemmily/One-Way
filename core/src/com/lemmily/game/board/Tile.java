@@ -56,4 +56,9 @@ public class Tile {
 
         return lString;
     }
+
+    public int hasItems()
+    {
+        return -1;
+    }
 }

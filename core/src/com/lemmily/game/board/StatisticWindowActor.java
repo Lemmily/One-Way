@@ -17,7 +17,7 @@ public class StatisticWindowActor extends Window {
         super(title, Assets.menuSkin);
         theLabel = new Label("", Assets.menuSkin);
         add(theLabel);
-        this.setTouchable(Touchable.disabled);
+//        this.setTouchable(Touchable.disabled);
     }
 
     /**
